@@ -1,0 +1,21 @@
+This file contains some planning for the reading comparison feature and its implementation.
+
+I'll try boolean for Genre rather than an enum - two constants for fiction and nonfiction.
+
+
+
+Structure of the code:
+
+ReadingListComparisonDriver has-a ...Processor and a ...UserInterface.
+That Driver class does high-level logic and coordination.
+
+The Processor handles logic to process/perform the comparison features.
+
+The UI class handles input from user and output to the user.
+
+
+
+Important:
+
+Some documentation somewhere will need to explain how "user" will be the user of the library management system,
+and "person" (1 or 2) will be a person whose reading list we are comparing to.
