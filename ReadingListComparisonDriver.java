@@ -35,9 +35,10 @@ public class ReadingListComparisonDriver {
         Book[] bookReadingListPerson2 = getUserInterface().getPerson2BookReadingListFromUser();
         ReadingListComparisonDriver driver = new ReadingListComparisonDriver(bookReadingListPerson1, bookReadingListPerson2);
 
-        driver.getProcessor().logComparisonBookReadingLists();  // TODO: decide whether to change this to logBooksInCommon() (doing 1 thing), or keep it (doing 2+ things).
+        driver.getProcessor().logBooksInCommon();
         driver.getProcessor().computeSharedInterestStatistics();
         
+        // TODO: I need to pass the data to the UI somehow.
         driver.getUserInterface().displaySharedInterestResults();
     }
     

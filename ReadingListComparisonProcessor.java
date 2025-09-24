@@ -25,18 +25,18 @@ public class ReadingListComparisonProcessor {
 
     private double percentageBooks2ComparedTo1 = 0.0;  // Percentage of books on person 2's list that are also on person 1's list.
 
-    // Data indicating the genre "preference" for person 1. Either FICTION or NON-FICTION
+    // Data indicating the genre "preference" for person 1. This will be either FICTION or NON-FICTION
     // This will be computed by seeing if person 1 has >= 60% of 1 genre in their list.
-    private boolean genrePreference1 = false;
+    private String genrePreference1 = null;
 
-    // Data indicating the genre "preference" for person 2. Either FICTION or NON-FICTION
+    // Data indicating the genre "preference" for person 2. This will be either FICTION or NON-FICTION
     // This will be computed by seeing if person 2 has >= 60% of 1 genre in their list.
-    private boolean genrePreference2 = false;
+    private String genrePreference2 = null;
 
     // TODO: decide whether to have Book class access these values, since I'll need a way to associate a genre with each book.
-    private static final boolean FICTION = true;  // Value signaling the fiction genre of book. TODO: pot. amend "GENRE" if it makes more sense in context
+    private static final String FICTION = "Fiction";  // Value signaling the fiction genre of book. TODO: pot. amend "GENRE" if it makes more sense in context
 
-    private static final boolean NON_FICTION = false;  // Value signaling the non-fiction genre of book. TODO: pot. amend "GENRE" if it makes more sense in context
+    private static final String NON_FICTION = "Non-fiction";  // Value signaling the non-fiction genre of book. TODO: pot. amend "GENRE" if it makes more sense in context
 
 
     public ReadingListComparisonProcessor(Book[] bookReadingListPerson1, Book[] bookReadingListPerson2) {
@@ -59,14 +59,11 @@ public class ReadingListComparisonProcessor {
         return booksInCommon;
     }
 
-    public void logComparisonBookReadingLists() {
-        // compare books (decompose by writing a method, and call it here)
-        logBooksInCommon();
 
-        // compare genres (decompose by writing a method, and call it here)
-    }
+    // compare genres (decompose by writing a method, and call it here)
+    
 
-    private void logBooksInCommon() {
+    public void logBooksInCommon() {
         if (smallerListPerson1()) {
             // iterate through person 1's list
             for (int i = 0; i < getBookReadingListPerson1().length; i++) {
@@ -88,8 +85,35 @@ public class ReadingListComparisonProcessor {
         return getBookReadingListPerson1().length < getBookReadingListPerson2().length;
     }
 
-    private void computeSharedInterestStatistics() {
+    public void computeSharedInterestStatistics() {
         // compute shared interest statistics, and store them in the appropriate fields.
+        computeGenrePreference1();
+        computeGenrePreference2();
+        
+        // the other method calls
+
+
+
+    }
+
+    // Requires that bookReadingListPerson1 is not empty. TODO: If it is - how to deal with that exception?
+    private void computeGenrePreference1() {
+        int countFictionBooks = 0;
+        int countNonFictionBooks = 0;
+
+        for (Book book : getBookReadingListPerson1()) {
+            if (book.getGenre().equals(FICTION)) {  // TODO: make genre a string.
+                countFictionBooks++;
+            }
+            else if (book.getGenre().equals(NON_FICTION)) {
+                countNonFictionBooks++;
+            }       
+        }
+        if (((double)countFictionBooks / getBookReadingListPerson1().length) >= PREFERENCE_LEVEL_PERCENTAGE) {
+            setGenrePreference1(FICTION);
+        } else {
+            setGenrePreference1(NON_FICTION)
+        }
     }
 
 }
