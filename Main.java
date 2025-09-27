@@ -3,8 +3,8 @@ public class Main {
         Library library = new Library();
 
         // Adding books and patrons
-        library.addBook(new Book("Java Programming", "John Doe", "1234567890"));
-        library.addBook(new Book("Python Basics", "Jane Smith", "0987654321"));
+        library.addBook(new Book("Java Programming", "John Doe", "1234567890", Genre.NON_FICTION));
+        library.addBook(new Book("Python Basics", "Jane Smith", "0987654321", Genre.NON_FICTION));
         library.addPatron(new Patron("Alice", 101));
         library.addPatron(new Patron("Bob", 102));
 

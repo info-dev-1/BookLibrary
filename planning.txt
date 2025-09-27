@@ -19,3 +19,13 @@ Important:
 
 Some documentation somewhere will need to explain how "user" will be the user of the library management system,
 and "person" (1 or 2) will be a person whose reading list we are comparing to.
+
+
+
+TODO: perhaps create a class, ReadingListDataStore, to hold the reading lists. That way I pass a reference type, not ArrayList<Book> so frequently
+(and so I don't repeat myself three times, for the pair of reading lists as class fields.)
+
+
+
+9/27
+I know I have a lot of code written w/o testing. I will wrap things up, then test it, section-by-section.
