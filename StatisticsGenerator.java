@@ -13,14 +13,12 @@ public class StatisticsGenerator {
 
     private ReadingListDataStore readingListDataStore;
 
-    private ArrayList<Book> booksInCommon;  // Books which are common to both people's reading lists.
+    private ArrayList<Book> booksInCommon = null;  // Books which are common to both people's reading lists.
 
-    private StatisticsDataStore statisticsDataStore;
+    private StatisticsDataStore statisticsDataStore = new StatisticsDataStore();
 
-    public StatisticsGenerator(ReadingListDataStore listDataStore, ArrayList<Book> booksInCommon, StatisticsDataStore statsDataStore) {
+    public StatisticsGenerator(ReadingListDataStore listDataStore) {
         this.readingListDataStore = listDataStore;
-        this.booksInCommon = booksInCommon;
-        this.statisticsDataStore = statsDataStore;
     }
 
     public ReadingListDataStore getReadingListDataStore() {
@@ -96,6 +94,7 @@ public class StatisticsGenerator {
         }
     }
 
+    // Requires that getBooksInCommon() doesn't return null
     private void computePercentageBooks1ComparedTo2() {
 
         int numerator = getBooksInCommon().size();
@@ -112,11 +111,12 @@ public class StatisticsGenerator {
         getStatisticsDataStore().setPercentageBooks2ComparedTo1((double)numerator / denominator);
     }
 
+    // TODO: code this and get rid of the placeholder "Java Programming" book.
     public void pickRandomBookInCommon() {
         getStatisticsDataStore().setRandomBookInCommon(new Book("Java Programming", "John Doe", "1234567890", Genre.NON_FICTION));
     }
 
-    public ArrayList<Object> compileInterestStatistics() {  // TODO: ensure this method is needed/is accurate/complete.
+    public ArrayList<Object> compileInterestStatistics() {  // TODO: ensure this method is accurate/complete.
         
         ArrayList<Object> result = new ArrayList<>();
 

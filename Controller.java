@@ -21,7 +21,7 @@ public class Controller {
     private StatisticsDataStore statisticsDataStore;
 
 
-    private Controller(String namePerson1, Book[] readingListPerson1, String namePerson2, Book[] readingListPerson2) {
+    public Controller(String namePerson1, Book[] readingListPerson1, String namePerson2, Book[] readingListPerson2) {
 
         userInterface = new UserInterface(namePerson1, namePerson2);
 
@@ -29,7 +29,7 @@ public class Controller {
 
         analyzer = new ReadingListAnalyzer(readingListDataStore);
 
-        statisticsGenerator = new StatisticsGenerator(readingListDataStore, null, statisticsDataStore);
+        statisticsGenerator = new StatisticsGenerator(readingListDataStore);
 
         statisticsDataStore = new StatisticsDataStore();
     }

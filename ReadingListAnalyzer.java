@@ -10,8 +10,7 @@ public class ReadingListAnalyzer {
 
     private ReadingListDataStore readingListDataStore;
     
-    private ArrayList<Book> booksInCommon = null;  // Books which are common to both people's reading lists.
-
+    private ArrayList<Book> booksInCommon = new ArrayList<>();  // Books which are common to both people's reading lists.
 
 
     public ReadingListAnalyzer(ReadingListDataStore dataStore) {

@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 /**
  * This class holds two reading lists, one for each of the people.
  * 
@@ -18,7 +16,7 @@ public class ReadingListDataStore {
         this.bookReadingListPerson2 = bookReadingListPerson2;
     }
 
-    // no setters needed because the book list won't be changed after initialization.
+    // no setters needed because the book lists won't be changed after initialization.
     
     public Book[] getBookReadingListPerson1() {
         return bookReadingListPerson1;

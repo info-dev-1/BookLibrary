@@ -19,6 +19,13 @@ public class UserInterface {
         this.namePerson2 = namePerson2;
     }
 
+    public String getNamePerson1() {
+        return namePerson1;
+    }
+
+    public String getNamePerson2() {
+        return namePerson2;
+    }
 
     public void displayInterestStatistics(ArrayList<Object> statistics) {
 
@@ -38,15 +45,22 @@ public class UserInterface {
     }
 
     private void displayGenrePreferences(Genre genrePreference1, Genre genrePreference2) {
-        // TODO: finish this method. use println statements.
+        
+        System.out.println(getNamePerson1() + "'s genre preference is: " + genrePreference1.toString());
+        System.out.println(getNamePerson2() + "'s genre preference is: " + genrePreference2.toString());
     }
 
     private void displayCommonBookComparison(Double percentageBooks1ComparedTo2, Double percentageBooks2ComparedTo1) {
-        // TODO: finish this
+        System.out.println(percentageBooks1ComparedTo2.toString()  
+            + "% of " + getNamePerson1() + "'s books are also on " + getNamePerson2() + "'s list.");
+
+        System.out.println(percentageBooks2ComparedTo1.toString()
+            + "% of " + getNamePerson2() + "'s books are also on " + getNamePerson1() + "'s list.");
     }
 
     private void displayRandomCommonBook(Book randomCommonBook) {
-        // TODO: finish this
+        System.out.println(getNamePerson1() + " and " + getNamePerson2() + " have this book in common: ");
+        System.out.println(randomCommonBook.toString());
     }
     
     

@@ -105,7 +105,7 @@ public class StatisticsDataStore {
         this.percentageBooks2ComparedTo1 = percentage;
     }
 
-
+    // TODO: decide whether to use this or delete it.
     public void unpackReadingInterestStatistics() {
         
         setGenrePreference1((Genre)getStatistics().get(INDEX_GENRE_PREFERENCE_1));
