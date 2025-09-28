@@ -18,6 +18,8 @@ public class Controller {
 
     private StatisticsGenerator statisticsGenerator;
 
+    private StatisticsDataStore statisticsDataStore;
+
 
     private Controller(String namePerson1, Book[] readingListPerson1, String namePerson2, Book[] readingListPerson2) {
 
@@ -27,7 +29,9 @@ public class Controller {
 
         analyzer = new ReadingListAnalyzer(readingListDataStore);
 
-        statisticsGenerator = new StatisticsGenerator(readingListDataStore, null);
+        statisticsGenerator = new StatisticsGenerator(readingListDataStore, null, statisticsDataStore);
+
+        statisticsDataStore = new StatisticsDataStore();
     }
 
     public String getNamePerson1() {
@@ -50,6 +54,10 @@ public class Controller {
         return statisticsGenerator;
     }
 
+    public StatisticsDataStore getStatisticsDataStore() {
+        return statisticsDataStore;
+    }
+
     // The central method of the comparison feature.
     public void performComparison() {
 
@@ -58,8 +66,11 @@ public class Controller {
         StatisticsGenerator statsGenerator = getStatisticsGenerator();
         statsGenerator.setBooksInCommon(getAnalyzer().getBooksInCommon());
         statsGenerator.computeInterestStatistics();
+        
+        StatisticsDataStore statsDataStore = statsGenerator.getStatisticsDataStore();
+        statsDataStore.setStatistics(statsGenerator.compileInterestStatistics());
 
-        // getUserInterface().displayInterestResults(statsGenerator.getInterestResults());
+        getUserInterface().displayInterestStatistics(statsDataStore.getStatistics());
     }
 
 }

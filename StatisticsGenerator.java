@@ -13,30 +13,14 @@ public class StatisticsGenerator {
 
     private ReadingListDataStore readingListDataStore;
 
-    private ArrayList<Book> booksInCommon = null;  // Books which are common to both people's reading lists.
+    private ArrayList<Book> booksInCommon;  // Books which are common to both people's reading lists.
 
-    private Book randomBookInCommon = null;
+    private StatisticsDataStore statisticsDataStore;
 
-
-    /** Data structures for holding computed statistics. */
-
-    private double percentageBooks1ComparedTo2 = 0.0;  // Percentage of books on person 1's list that are also on person 2's list.
-
-    private double percentageBooks2ComparedTo1 = 0.0;  // Percentage of books on person 2's list that are also on person 1's list.
-
-    // Data indicating the genre "preference" for person 1. This will be either Genre.FICTION or Genre.NON_FICTION
-    // This will be computed by seeing if person 1 has >= 60% of 1 genre in their list.
-    private Genre genrePreference1 = null;
-
-    // Data indicating the genre "preference" for person 2. This will be either Genre.FICTION or Genre.NON_FICTION
-    // This will be computed by seeing if person 2 has >= 60% of 1 genre in their list.
-    private Genre genrePreference2 = null;
-
-
-
-    public StatisticsGenerator(ReadingListDataStore dataStore, ArrayList<Book> booksInCommon) {
-        readingListDataStore = dataStore;
+    public StatisticsGenerator(ReadingListDataStore listDataStore, ArrayList<Book> booksInCommon, StatisticsDataStore statsDataStore) {
+        this.readingListDataStore = listDataStore;
         this.booksInCommon = booksInCommon;
+        this.statisticsDataStore = statsDataStore;
     }
 
     public ReadingListDataStore getReadingListDataStore() {
@@ -51,47 +35,9 @@ public class StatisticsGenerator {
         this.booksInCommon = booksInCommon;
     }
 
-    public Book getRandomBookInCommon() {
-        return randomBookInCommon;
+    public StatisticsDataStore getStatisticsDataStore() {
+        return statisticsDataStore;
     }
-
-    public void setRandomBookInCommon(Book randomBookInCommon) {
-        this.randomBookInCommon = randomBookInCommon;
-    }
-
-    public Genre getGenrePreference1() {
-        return genrePreference1;
-    }
-
-    public void setGenrePreference1(Genre preference) {
-        genrePreference1 = preference;
-    }
-
-    public Genre getGenrePreference2() {
-        return genrePreference2;
-    }
-
-    public void setGenrePreference2(Genre preference) {
-        genrePreference2 = preference;
-    }
-
-    private double getPercentageBooks1ComparedTo2() {
-        return percentageBooks1ComparedTo2;
-    }
-
-    private void setPercentageBooks1ComparedTo2(double percentage) {
-        this.percentageBooks1ComparedTo2 = percentage;
-    }
-
-    private double getPercentageBooks2ComparedTo1() {
-        return percentageBooks2ComparedTo1;
-    }
-
-    private void setPercentageBooks2ComparedTo1(double percentage) {
-        this.percentageBooks2ComparedTo1 = percentage;
-    }
-
-
 
     public void computeInterestStatistics() {
         // compute interest statistics, and store them in the appropriate fields.
@@ -121,9 +67,9 @@ public class StatisticsGenerator {
             // }       
         }
         if (((double)countFictionBooks / listPerson1.length) >= PREFERENCE_LEVEL_PERCENTAGE) {
-            setGenrePreference1(Genre.FICTION);
+            getStatisticsDataStore().setGenrePreference1(Genre.FICTION);
         } else {
-            setGenrePreference1(Genre.NON_FICTION);
+            getStatisticsDataStore().setGenrePreference1(Genre.NON_FICTION);
         }
     }
 
@@ -144,9 +90,9 @@ public class StatisticsGenerator {
             // }       
         }
         if (((double)countFictionBooks / listPerson2.length) >= PREFERENCE_LEVEL_PERCENTAGE) {
-            setGenrePreference2(Genre.FICTION);
+            getStatisticsDataStore().setGenrePreference2(Genre.FICTION);
         } else {
-            setGenrePreference2(Genre.NON_FICTION);
+            getStatisticsDataStore().setGenrePreference2(Genre.NON_FICTION);
         }
     }
 
@@ -155,7 +101,7 @@ public class StatisticsGenerator {
         int numerator = getBooksInCommon().size();
         int denominator = getReadingListDataStore().getBookReadingListPerson1().length;
 
-        setPercentageBooks1ComparedTo2((double)numerator / denominator);  // TODO: Check integer vs. double division, ensure my syntax is correct.
+        getStatisticsDataStore().setPercentageBooks1ComparedTo2((double)numerator / denominator);  // TODO: Check integer vs. double division, ensure my syntax is correct.
     }
 
     private void computePercentageBooks2ComparedTo1() {
@@ -163,25 +109,25 @@ public class StatisticsGenerator {
         int numerator = getBooksInCommon().size();
         int denominator = getReadingListDataStore().getBookReadingListPerson2().length;
 
-        setPercentageBooks2ComparedTo1((double)numerator / denominator);
+        getStatisticsDataStore().setPercentageBooks2ComparedTo1((double)numerator / denominator);
     }
 
     public void pickRandomBookInCommon() {
-        setRandomBookInCommon(new Book("Java Programming", "John Doe", "1234567890", Genre.NON_FICTION));
+        getStatisticsDataStore().setRandomBookInCommon(new Book("Java Programming", "John Doe", "1234567890", Genre.NON_FICTION));
     }
 
-    public ArrayList<Object> getInterestResults() {
+    public ArrayList<Object> compileInterestStatistics() {  // TODO: ensure this method is needed/is accurate/complete.
         
         ArrayList<Object> result = new ArrayList<>();
 
         // The order here will be the order in which the information will be displayed.
-        result.add(getGenrePreference1());
-        result.add(getGenrePreference2());
+        result.add(getStatisticsDataStore().getGenrePreference1());
+        result.add(getStatisticsDataStore().getGenrePreference2());
 
-        result.add((Double)(getPercentageBooks1ComparedTo2()));
-        result.add((Double)(getPercentageBooks2ComparedTo1()));
+        result.add((Double)(getStatisticsDataStore().getPercentageBooks1ComparedTo2()));
+        result.add((Double)(getStatisticsDataStore().getPercentageBooks2ComparedTo1()));
 
-        result.add(getRandomBookInCommon());
+        result.add(getStatisticsDataStore().getRandomBookInCommon());
 
         return result;
     }
