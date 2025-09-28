@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class StatisticsGenerator {
     
-    private static final double PREFERENCE_LEVEL_PERCENTAGE = 60.0;
+    private static final double PREFERENCE_LEVEL = 0.6;
 
     private ReadingListDataStore readingListDataStore;
 
@@ -64,7 +64,7 @@ public class StatisticsGenerator {
             //     countNonFictionBooks++;
             // }       
         }
-        if (((double)countFictionBooks / listPerson1.length) >= PREFERENCE_LEVEL_PERCENTAGE) {
+        if (((double)countFictionBooks / listPerson1.length) >= PREFERENCE_LEVEL) { 
             getStatisticsDataStore().setGenrePreference1(Genre.FICTION);
         } else {
             getStatisticsDataStore().setGenrePreference1(Genre.NON_FICTION);
@@ -87,7 +87,7 @@ public class StatisticsGenerator {
             //     countNonFictionBooks++;
             // }       
         }
-        if (((double)countFictionBooks / listPerson2.length) >= PREFERENCE_LEVEL_PERCENTAGE) {
+        if (((double)countFictionBooks / listPerson2.length) >= PREFERENCE_LEVEL) {
             getStatisticsDataStore().setGenrePreference2(Genre.FICTION);
         } else {
             getStatisticsDataStore().setGenrePreference2(Genre.NON_FICTION);

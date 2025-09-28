@@ -31,26 +31,58 @@ public class ReadingListAnalyzer {
         Book[] listPerson1 = getReadingListDataStore().getBookReadingListPerson1();
         Book[] listPerson2 = getReadingListDataStore().getBookReadingListPerson2();
 
-        if (smallerListPerson1()) {
-            // iterate through person 1's list
+        if (largerListPerson1()) {
+            
             for (int i = 0; i < listPerson1.length; i++) {
-                if (listPerson1[i].equals(listPerson2[i])) {
-                    getBooksInCommon().add(listPerson1[i]);
+                for (int j = 0; j < listPerson2.length; j++) {
+                    
+                    logBookIfNecessary(listPerson1, i, listPerson2, j);
                 }
             }
-        } else {
-            // iterate through person 2's list
+        }
+        else if (largerListPerson2()) {
+
             for (int i = 0; i < listPerson2.length; i++) {
-                if (listPerson2[i].equals(listPerson1[i])) {
-                    getBooksInCommon().add(listPerson2[i]);
+                for (int j = 0; j < listPerson1.length; j++) {
+                    
+                    logBookIfNecessary(listPerson2, i, listPerson1, j);
                 }
             }
         }
     }
 
-    private boolean smallerListPerson1() {
-        return getReadingListDataStore().getBookReadingListPerson1().length
-            < getReadingListDataStore().getBookReadingListPerson2().length;
+    private void logBookIfNecessary(Book[] listFirstPerson, int indxListFirstPerson, Book[] listSecondPerson, int indxListSecondPerson) {
+        int k = indxListFirstPerson;
+        int m = indxListSecondPerson;
+
+        if (!bookPreviouslyAdded(listSecondPerson[m], getBooksInCommon()) 
+            && bookInCommon(listFirstPerson[k], listSecondPerson[m])) {
+
+            getBooksInCommon().add(listSecondPerson[m]);
+        }
     }
 
+
+    private boolean largerListPerson1() {
+        return getReadingListDataStore().getBookReadingListPerson1().length
+            > getReadingListDataStore().getBookReadingListPerson2().length;
+    }
+
+    private boolean largerListPerson2() {
+        return getReadingListDataStore().getBookReadingListPerson2().length
+            > getReadingListDataStore().getBookReadingListPerson1().length;
+    }
+
+    private boolean bookPreviouslyAdded(Book bookToCheck, ArrayList<Book> booksInCommon) {
+        for (Book bookInCommon : booksInCommon) {
+            if (bookToCheck.equals(bookInCommon)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean bookInCommon(Book book1, Book book2) {
+        return book1.equals(book2);
+    }
 }
