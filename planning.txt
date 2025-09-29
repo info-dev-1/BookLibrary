@@ -24,8 +24,31 @@ and "person" (1 or 2) will be a person whose reading list we are comparing to.
 
 TODO: perhaps create a class, ReadingListDataStore, to hold the reading lists. That way I pass a reference type, not ArrayList<Book> so frequently
 (and so I don't repeat myself three times, for the pair of reading lists as class fields.)
-
+(done)
 
 
 9/27
 I know I have a lot of code written w/o testing. I will wrap things up, then test it, section-by-section.
+
+
+9/29
+"significant majority" of books are [fiction/non-fiction], indicating a possible preference for [fiction or non-fiction]
+option:
+1. compute majority, and report that in the statistics explanation.
+2. compute "preference", and report the description above.
+I like 2.
+
+thus, options:
+1. call the genre preference "genre preference"
+2. call it "signifiant majority"
+I like 1.
+
+NOTE: if the person does meet the preference level for fiction or nonfiction, then I would have the app output,
+"this person has about the same number of fiction and nonfiction books on their list." (or something similar)
+
+
+
+TODO:
+ - format the percentage books in common, to be an actual percentage.
+ - make an enum for genre preference and use it.
+

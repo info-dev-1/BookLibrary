@@ -30,11 +30,11 @@ public class StatisticsDataStore {
 
     // Data indicating the genre "preference" for person 1. This will be either Genre.FICTION or Genre.NON_FICTION
     // This will be computed by seeing if person 1 has >= 60% of 1 genre in their list.
-    private Genre genrePreference1 = null;
+    private Genre genrePreferencePerson1 = null;
 
     // Data indicating the genre "preference" for person 2. This will be either Genre.FICTION or Genre.NON_FICTION
     // This will be computed by seeing if person 2 has >= 60% of 1 genre in their list.
-    private Genre genrePreference2 = null;
+    private Genre genrePreferencePerson2 = null;
 
 
     public static int getIndexGenrePreference1() {
@@ -73,20 +73,20 @@ public class StatisticsDataStore {
         this.randomBookInCommon = randomBookInCommon;
     }
 
-    public Genre getGenrePreference1() {
-        return genrePreference1;
+    public Genre getGenrePreferencePerson1() {
+        return genrePreferencePerson1;
     }
 
-    public void setGenrePreference1(Genre preference) {
-        genrePreference1 = preference;
+    public void setGenrePreferencePerson1(Genre preference) {
+        genrePreferencePerson1 = preference;
     }
 
-    public Genre getGenrePreference2() {
-        return genrePreference2;
+    public Genre getGenrePreferencePerson2() {
+        return genrePreferencePerson2;
     }
 
-    public void setGenrePreference2(Genre preference) {
-        genrePreference2 = preference;
+    public void setGenrePreferencePerson2(Genre preference) {
+        genrePreferencePerson2 = preference;
     }
 
     public double getPercentageBooks1ComparedTo2() {
@@ -103,17 +103,5 @@ public class StatisticsDataStore {
 
     public void setPercentageBooks2ComparedTo1(double percentage) {
         this.percentageBooks2ComparedTo1 = percentage;
-    }
-
-    // TODO: decide whether to use this or delete it.
-    public void unpackReadingInterestStatistics() {
-        
-        setGenrePreference1((Genre)getStatistics().get(INDEX_GENRE_PREFERENCE_1));
-        setGenrePreference2((Genre)getStatistics().get(INDEX_GENRE_PREFERENCE_2));
-
-        setPercentageBooks1ComparedTo2((Double)getStatistics().get(INDEX_PERCENTAGE_1));
-        setPercentageBooks2ComparedTo1((Double)getStatistics().get(INDEX_PERCENTAGE_2));
-
-        setRandomBookInCommon((Book)getStatistics().get(INDEX_RANDOM_COMMON_BOOK));
     }
 }

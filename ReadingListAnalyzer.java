@@ -40,8 +40,7 @@ public class ReadingListAnalyzer {
                 }
             }
         }
-        else if (largerListPerson2()) {
-
+        else {
             for (int i = 0; i < listPerson2.length; i++) {
                 for (int j = 0; j < listPerson1.length; j++) {
                     
@@ -66,11 +65,6 @@ public class ReadingListAnalyzer {
     private boolean largerListPerson1() {
         return getReadingListDataStore().getBookReadingListPerson1().length
             > getReadingListDataStore().getBookReadingListPerson2().length;
-    }
-
-    private boolean largerListPerson2() {
-        return getReadingListDataStore().getBookReadingListPerson2().length
-            > getReadingListDataStore().getBookReadingListPerson1().length;
     }
 
     private boolean bookPreviouslyAdded(Book bookToCheck, ArrayList<Book> booksInCommon) {

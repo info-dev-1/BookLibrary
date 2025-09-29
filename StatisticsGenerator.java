@@ -1,4 +1,7 @@
 import java.util.ArrayList;
+import java.util.Random;
+
+
 
 /**
  * This class contains code which generates statistics. The statistics relate to interests/shared interests between the two people whose lists we are comparing.
@@ -39,8 +42,8 @@ public class StatisticsGenerator {
 
     public void computeInterestStatistics() {
         // compute interest statistics, and store them in the appropriate fields.
-        computeGenrePreference1();
-        computeGenrePreference2();
+        computeGenrePreferencePerson1();
+        computeGenrePreferencePerson2();
         
         computePercentageBooks1ComparedTo2();
         computePercentageBooks2ComparedTo1();
@@ -48,51 +51,71 @@ public class StatisticsGenerator {
         pickRandomBookInCommon();
     }
 
+
     // Requires that bookReadingListPerson1 is not empty. TODO: If it is - how to deal with that exception?
-    private void computeGenrePreference1() {
+    private void computeGenrePreferencePerson1() {
         
         Book[] listPerson1 = getReadingListDataStore().getBookReadingListPerson1();
 
-        int countFictionBooks = 0;
-        // int countNonFictionBooks = 0;
+        int[] countBooksBothGenres = countBooksBothGenres(listPerson1);
+        int countFictionBooks = countBooksBothGenres[0];
+        int countNonFictionBooks = countBooksBothGenres[1];
 
-        for (Book book : listPerson1) {
-            if (book.getGenre().equals(Genre.FICTION)) {  
-                countFictionBooks++;
-            }
-            // else if (book.getGenre().equals(NON_FICTION)) {
-            //     countNonFictionBooks++;
-            // }       
+        if (personPrefersFiction(listPerson1.length, countFictionBooks)) {
+            getStatisticsDataStore().setGenrePreferencePerson1(Genre.FICTION);
         }
-        if (((double)countFictionBooks / listPerson1.length) >= PREFERENCE_LEVEL) { 
-            getStatisticsDataStore().setGenrePreference1(Genre.FICTION);
-        } else {
-            getStatisticsDataStore().setGenrePreference1(Genre.NON_FICTION);
+        else if (personPrefersNonFiction(listPerson1.length, countNonFictionBooks)) {
+            getStatisticsDataStore().setGenrePreferencePerson1(Genre.NON_FICTION);
+        }
+        else {
+            getStatisticsDataStore().setGenrePreferencePerson1(Genre.NO_GENRE);
         }
     }
 
     // Requires that bookReadingListPerson2 is not empty. TODO: If it is - how to deal with that exception?
-    private void computeGenrePreference2() {
+    private void computeGenrePreferencePerson2() {
 
         Book[] listPerson2 = getReadingListDataStore().getBookReadingListPerson2();
 
-        int countFictionBooks = 0;
-        // int countNonFictionBooks = 0;
+        int[] countBooksBothGenres = countBooksBothGenres(listPerson2);
+        int countFictionBooks = countBooksBothGenres[0];
+        int countNonFictionBooks = countBooksBothGenres[1];
 
-        for (Book book : listPerson2) {
-            if (book.getGenre().equals(Genre.FICTION)) { 
-                countFictionBooks++;
-            }
-            // else if (book.getGenre().equals(NON_FICTION)) {
-            //     countNonFictionBooks++;
-            // }       
+        if (personPrefersFiction(listPerson2.length, countFictionBooks)) {
+            getStatisticsDataStore().setGenrePreferencePerson2(Genre.FICTION);
         }
-        if (((double)countFictionBooks / listPerson2.length) >= PREFERENCE_LEVEL) {
-            getStatisticsDataStore().setGenrePreference2(Genre.FICTION);
-        } else {
-            getStatisticsDataStore().setGenrePreference2(Genre.NON_FICTION);
+        else if (personPrefersNonFiction(listPerson2.length, countNonFictionBooks)) {
+            getStatisticsDataStore().setGenrePreferencePerson2(Genre.NON_FICTION);
+        }
+        else {
+            getStatisticsDataStore().setGenrePreferencePerson2(Genre.NO_GENRE);
         }
     }
+
+    // Returns an array of size 2: index 0 accesses the count for ficiton books, index 1 the count for nonfiction books.
+    private int[] countBooksBothGenres(Book[] readingList) {
+        int countFictionBooks = 0;
+        int countNonFictionBooks = 0;
+
+        for (Book book : readingList) {
+            if (book.getGenre().equals(Genre.FICTION)) {  
+                countFictionBooks++;
+            }
+            else if (book.getGenre().equals(Genre.NON_FICTION)) {
+                countNonFictionBooks++;
+            }       
+        }
+        return new int[] { countFictionBooks, countNonFictionBooks };
+    }
+
+    private boolean personPrefersFiction(int lengthReadingList, int countFictionBooks) {
+        return ((double)countFictionBooks / lengthReadingList) >= PREFERENCE_LEVEL;
+    }
+
+    private boolean personPrefersNonFiction(int lengthReadingList, int countNonFictionBooks) {
+        return ((double)countNonFictionBooks / lengthReadingList) >= PREFERENCE_LEVEL;
+    }
+
 
     // Requires that getBooksInCommon() doesn't return null
     private void computePercentageBooks1ComparedTo2() {
@@ -100,6 +123,7 @@ public class StatisticsGenerator {
         int numerator = getBooksInCommon().size();
         int denominator = getReadingListDataStore().getBookReadingListPerson1().length;
 
+        // TODO: convert the following to a percentage and then store that result.
         getStatisticsDataStore().setPercentageBooks1ComparedTo2((double)numerator / denominator);  // TODO: Check integer vs. double division, ensure my syntax is correct.
     }
 
@@ -111,9 +135,14 @@ public class StatisticsGenerator {
         getStatisticsDataStore().setPercentageBooks2ComparedTo1((double)numerator / denominator);
     }
 
-    // TODO: code this and get rid of the placeholder "Java Programming" book.
     public void pickRandomBookInCommon() {
-        getStatisticsDataStore().setRandomBookInCommon(new Book("Java Programming", "John Doe", "1234567890", Genre.NON_FICTION));
+
+        Random random = new Random();
+        int bound = getBooksInCommon().size();
+        int randomIndx = random.nextInt(bound);
+
+        Book randomBookInCommon = getBooksInCommon().get(randomIndx);
+        getStatisticsDataStore().setRandomBookInCommon(randomBookInCommon);
     }
 
     public ArrayList<Object> compileInterestStatistics() {  // TODO: ensure this method is accurate/complete.
@@ -121,8 +150,8 @@ public class StatisticsGenerator {
         ArrayList<Object> result = new ArrayList<>();
 
         // The order here will be the order in which the information will be displayed.
-        result.add(getStatisticsDataStore().getGenrePreference1());
-        result.add(getStatisticsDataStore().getGenrePreference2());
+        result.add(getStatisticsDataStore().getGenrePreferencePerson1());
+        result.add(getStatisticsDataStore().getGenrePreferencePerson2());
 
         result.add((Double)(getStatisticsDataStore().getPercentageBooks1ComparedTo2()));
         result.add((Double)(getStatisticsDataStore().getPercentageBooks2ComparedTo1()));
