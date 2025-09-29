@@ -37,20 +37,20 @@ public class UserInterface {
 
         int indxRandomBook = StatisticsDataStore.getIndexRandomCommonBook();
 
-        displayGenrePreferences( (Genre)(statistics.get(indxGenre1)), (Genre)(statistics.get(indxGenre2)) );
+        displayGenrePreferences( (GenrePreference)(statistics.get(indxGenre1)), (GenrePreference)(statistics.get(indxGenre2)) );
 
-        displayCommonBookComparison( (Double)(statistics.get(indxPercentage1)), (Double)(statistics.get(indxPercentage2)) );
+        displayCommonBookComparison( (Integer)(statistics.get(indxPercentage1)), (Integer)(statistics.get(indxPercentage2)) );
 
         displayRandomCommonBook( (Book)(statistics.get(indxRandomBook)) );
     }
 
-    private void displayGenrePreferences(Genre genrePreference1, Genre genrePreference2) {
+    private void displayGenrePreferences(GenrePreference genrePreference1, GenrePreference genrePreference2) {
         
         System.out.println(getNamePerson1() + "'s genre preference is: " + genrePreference1.toString());
         System.out.println(getNamePerson2() + "'s genre preference is: " + genrePreference2.toString());
     }
 
-    private void displayCommonBookComparison(Double percentageBooks1ComparedTo2, Double percentageBooks2ComparedTo1) {
+    private void displayCommonBookComparison(Integer percentageBooks1ComparedTo2, Integer percentageBooks2ComparedTo1) {
         System.out.println(percentageBooks1ComparedTo2.toString()  
             + "% of " + getNamePerson1() + "'s books are also on " + getNamePerson2() + "'s list.");
 

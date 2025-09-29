@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Random;
-
+import java.math.BigDecimal;
+import java.math.MathContext;
 
 
 /**
@@ -62,13 +63,13 @@ public class StatisticsGenerator {
         int countNonFictionBooks = countBooksBothGenres[1];
 
         if (personPrefersFiction(listPerson1.length, countFictionBooks)) {
-            getStatisticsDataStore().setGenrePreferencePerson1(Genre.FICTION);
+            getStatisticsDataStore().setGenrePreferencePerson1(GenrePreference.FICTION);
         }
         else if (personPrefersNonFiction(listPerson1.length, countNonFictionBooks)) {
-            getStatisticsDataStore().setGenrePreferencePerson1(Genre.NON_FICTION);
+            getStatisticsDataStore().setGenrePreferencePerson1(GenrePreference.NON_FICTION);
         }
         else {
-            getStatisticsDataStore().setGenrePreferencePerson1(Genre.NO_GENRE);
+            getStatisticsDataStore().setGenrePreferencePerson1(GenrePreference.NO_GENRE);
         }
     }
 
@@ -82,13 +83,13 @@ public class StatisticsGenerator {
         int countNonFictionBooks = countBooksBothGenres[1];
 
         if (personPrefersFiction(listPerson2.length, countFictionBooks)) {
-            getStatisticsDataStore().setGenrePreferencePerson2(Genre.FICTION);
+            getStatisticsDataStore().setGenrePreferencePerson2(GenrePreference.FICTION);
         }
         else if (personPrefersNonFiction(listPerson2.length, countNonFictionBooks)) {
-            getStatisticsDataStore().setGenrePreferencePerson2(Genre.NON_FICTION);
+            getStatisticsDataStore().setGenrePreferencePerson2(GenrePreference.NON_FICTION);
         }
         else {
-            getStatisticsDataStore().setGenrePreferencePerson2(Genre.NO_GENRE);
+            getStatisticsDataStore().setGenrePreferencePerson2(GenrePreference.NO_GENRE);
         }
     }
 
@@ -123,8 +124,10 @@ public class StatisticsGenerator {
         int numerator = getBooksInCommon().size();
         int denominator = getReadingListDataStore().getBookReadingListPerson1().length;
 
-        // TODO: convert the following to a percentage and then store that result.
-        getStatisticsDataStore().setPercentageBooks1ComparedTo2((double)numerator / denominator);  // TODO: Check integer vs. double division, ensure my syntax is correct.
+        int result = computePercentage(numerator, denominator);
+
+        // set the result to the field within the data store
+        getStatisticsDataStore().setPercentageBooks1ComparedTo2(result);
     }
 
     private void computePercentageBooks2ComparedTo1() {
@@ -132,7 +135,19 @@ public class StatisticsGenerator {
         int numerator = getBooksInCommon().size();
         int denominator = getReadingListDataStore().getBookReadingListPerson2().length;
 
-        getStatisticsDataStore().setPercentageBooks2ComparedTo1((double)numerator / denominator);
+        int result = computePercentage(numerator, denominator);
+        
+        getStatisticsDataStore().setPercentageBooks2ComparedTo1(result);
+    }
+
+    private int computePercentage(int numerator, int denominator) {
+
+        double fraction = (double)numerator / denominator;  // TODO: Check integer vs. double division, ensure my syntax is correct.
+        double resultDouble = fraction * 100;
+        BigDecimal resultBigDecimal = new BigDecimal(resultDouble);
+        BigDecimal resultRounded = resultBigDecimal.round(new MathContext(2));
+
+        return resultRounded.intValue();
     }
 
     public void pickRandomBookInCommon() {
@@ -153,8 +168,8 @@ public class StatisticsGenerator {
         result.add(getStatisticsDataStore().getGenrePreferencePerson1());
         result.add(getStatisticsDataStore().getGenrePreferencePerson2());
 
-        result.add((Double)(getStatisticsDataStore().getPercentageBooks1ComparedTo2()));
-        result.add((Double)(getStatisticsDataStore().getPercentageBooks2ComparedTo1()));
+        result.add((Integer)(getStatisticsDataStore().getPercentageBooks1ComparedTo2()));
+        result.add((Integer)(getStatisticsDataStore().getPercentageBooks2ComparedTo1()));
 
         result.add(getStatisticsDataStore().getRandomBookInCommon());
 

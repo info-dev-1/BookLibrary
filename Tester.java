@@ -17,8 +17,8 @@ public class Tester {
         String aliceName = "Alice";
         String bobName = "Bob";
 
-        Book[] aliceBooks = { book1, book2, book4, book6 };
-        Book[] bobBooks = { book3, book4, book2, book5, book6 };
+        Book[] aliceBooks = { book1, book2, book4 };
+        Book[] bobBooks = { book3, book4, book2, book5 };
 
         Controller controller = new Controller(aliceName, aliceBooks, bobName, bobBooks);
         controller.performComparison();

@@ -24,17 +24,17 @@ public class StatisticsDataStore {
 
     /** Data structures for holding computed statistics. */
 
-    private double percentageBooks1ComparedTo2 = 0.0;  // Percentage of books on person 1's list that are also on person 2's list.
+    private int percentageBooks1ComparedTo2 = 0;  // Percentage of books on person 1's list that are also on person 2's list.
 
-    private double percentageBooks2ComparedTo1 = 0.0;  // Percentage of books on person 2's list that are also on person 1's list.
+    private int percentageBooks2ComparedTo1 = 0;  // Percentage of books on person 2's list that are also on person 1's list.
 
-    // Data indicating the genre "preference" for person 1. This will be either Genre.FICTION or Genre.NON_FICTION
+    // Data indicating the genre "preference" for person 1. This will be either GenrePreference.FICTION or GenrePreference.NON_FICTION
     // This will be computed by seeing if person 1 has >= 60% of 1 genre in their list.
-    private Genre genrePreferencePerson1 = null;
+    private GenrePreference genrePreferencePerson1 = null;
 
-    // Data indicating the genre "preference" for person 2. This will be either Genre.FICTION or Genre.NON_FICTION
+    // Data indicating the genre "preference" for person 2. This will be either GenrePreference.FICTION or GenrePreference.NON_FICTION
     // This will be computed by seeing if person 2 has >= 60% of 1 genre in their list.
-    private Genre genrePreferencePerson2 = null;
+    private GenrePreference genrePreferencePerson2 = null;
 
 
     public static int getIndexGenrePreference1() {
@@ -73,35 +73,35 @@ public class StatisticsDataStore {
         this.randomBookInCommon = randomBookInCommon;
     }
 
-    public Genre getGenrePreferencePerson1() {
+    public GenrePreference getGenrePreferencePerson1() {
         return genrePreferencePerson1;
     }
 
-    public void setGenrePreferencePerson1(Genre preference) {
+    public void setGenrePreferencePerson1(GenrePreference preference) {
         genrePreferencePerson1 = preference;
     }
 
-    public Genre getGenrePreferencePerson2() {
+    public GenrePreference getGenrePreferencePerson2() {
         return genrePreferencePerson2;
     }
 
-    public void setGenrePreferencePerson2(Genre preference) {
+    public void setGenrePreferencePerson2(GenrePreference preference) {
         genrePreferencePerson2 = preference;
     }
 
-    public double getPercentageBooks1ComparedTo2() {
+    public int getPercentageBooks1ComparedTo2() {
         return percentageBooks1ComparedTo2;
     }
 
-    public void setPercentageBooks1ComparedTo2(double percentage) {
+    public void setPercentageBooks1ComparedTo2(int percentage) {
         this.percentageBooks1ComparedTo2 = percentage;
     }
 
-    public double getPercentageBooks2ComparedTo1() {
+    public int getPercentageBooks2ComparedTo1() {
         return percentageBooks2ComparedTo1;
     }
 
-    public void setPercentageBooks2ComparedTo1(double percentage) {
+    public void setPercentageBooks2ComparedTo1(int percentage) {
         this.percentageBooks2ComparedTo1 = percentage;
     }
 }
