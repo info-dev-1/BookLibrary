@@ -142,7 +142,7 @@ public class StatisticsGenerator {
 
     private int computePercentage(int numerator, int denominator) {
 
-        double fraction = (double)numerator / denominator;  // TODO: Check integer vs. double division, ensure my syntax is correct.
+        double fraction = (double)numerator / denominator;
         double resultDouble = fraction * 100;
         BigDecimal resultBigDecimal = new BigDecimal(resultDouble);
         BigDecimal resultRounded = resultBigDecimal.round(new MathContext(2));
@@ -160,7 +160,7 @@ public class StatisticsGenerator {
         getStatisticsDataStore().setRandomBookInCommon(randomBookInCommon);
     }
 
-    public ArrayList<Object> compileInterestStatistics() {  // TODO: ensure this method is accurate/complete.
+    public ArrayList<Object> compileInterestStatistics() {
         
         ArrayList<Object> result = new ArrayList<>();
 

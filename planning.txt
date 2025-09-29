@@ -49,6 +49,6 @@ NOTE: if the person does meet the preference level for fiction or nonfiction, th
 
 
 TODO:
- - format the percentage books in common, to be an actual percentage.
+ - format the percentage books in common, to be an actual percentage. (done)
  - make an enum for genre preference and use it. (Done)
 
