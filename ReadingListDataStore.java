@@ -16,8 +16,8 @@ public class ReadingListDataStore {
         this.bookReadingListPerson2 = bookReadingListPerson2;
     }
 
-    // no setters needed because the book lists won't be changed after initialization.
-    
+    // No setters are needed, because the book lists won't be changed after their initialization.
+
     public Book[] getBookReadingListPerson1() {
         return bookReadingListPerson1;
     }

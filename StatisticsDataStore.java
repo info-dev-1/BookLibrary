@@ -1,41 +1,42 @@
 import java.util.ArrayList;
 
 /**
- * This class holds computed statistics. The statistics TODO: finish this.
+ * This class holds computed statistics. Based on the reading lists, the statistics describe common interests to person 1 and person 2.
+ * 
+ * @author info-dev-1
+ * @since 9/26/2025
  */
 public class StatisticsDataStore {
 
+    // Indexes for the statistics field.
 
-    private static final int INDEX_GENRE_PREFERENCE_1 = 0;
+    private static final int INDEX_GENRE_PREFERENCE_1 = 0;  // For accessing the genre preference for person 1.
     
-    private static final int INDEX_GENRE_PREFERENCE_2 = 1;
+    private static final int INDEX_GENRE_PREFERENCE_2 = 1;  // For accessing the genre preference for person 2.
 
-    private static final int INDEX_PERCENTAGE_1 = 2;
+    private static final int INDEX_PERCENTAGE_1 = 2;  // For accessing percentageBooks1ComparedTo2.
 
-    private static final int INDEX_PERCENTAGE_2 = 3;
+    private static final int INDEX_PERCENTAGE_2 = 3;  // For accessing percentageBooks2ComparedTo1.
 
-    private static final int INDEX_RANDOM_COMMON_BOOK = 4;
-
-    
-    private ArrayList<Object> statistics = null;
-
-    private Book randomBookInCommon = null;
+    private static final int INDEX_RANDOM_COMMON_BOOK = 4;  // For accessing the random common book.
 
 
-    /** Data structures for holding computed statistics. */
+    // Fields holding the statistics.
+
+    private ArrayList<Object> statistics = null;  // The list of statistics.
+
+    private Book randomBookInCommon = null;  // The random book in common to both person 1 and person 2.
 
     private int percentageBooks1ComparedTo2 = 0;  // Percentage of books on person 1's list that are also on person 2's list.
 
     private int percentageBooks2ComparedTo1 = 0;  // Percentage of books on person 2's list that are also on person 1's list.
 
-    // Data indicating the genre "preference" for person 1. This will be either GenrePreference.FICTION or GenrePreference.NON_FICTION
-    // This will be computed by seeing if person 1 has >= 60% of 1 genre in their list.
-    private GenrePreference genrePreferencePerson1 = null;
+    private GenrePreference genrePreferencePerson1 = null;  // Data indicating the genre "preference" for person 1.
+    
+    private GenrePreference genrePreferencePerson2 = null;  // Data indicating the genre "preference" for person 2.
 
-    // Data indicating the genre "preference" for person 2. This will be either GenrePreference.FICTION or GenrePreference.NON_FICTION
-    // This will be computed by seeing if person 2 has >= 60% of 1 genre in their list.
-    private GenrePreference genrePreferencePerson2 = null;
 
+    // Getters and setters.
 
     public static int getIndexGenrePreference1() {
         return INDEX_GENRE_PREFERENCE_1;

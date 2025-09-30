@@ -1,14 +1,18 @@
 import java.util.ArrayList;
 
 /**
- * This class handles input from the user and output to the user.
+ * This class handles output to the user.
+ * If info-dev-1 codes the reading list input/assembling aspect, that code will be in this class.
+ * 
  * When a field or method has the number 1 or the number 2, that refers to "person 1" or "person 2" (who are the people whose reading lists we are comparing).
  * 
- * info-dev-1
- * 9/23/2025
+ * @author info-dev-1
+ * @since 9/23/2025
  */
 public class UserInterface {
     
+    // Names of the people whose reading lists we are comparing.
+
     private String namePerson1;
 
     private String namePerson2;
@@ -27,6 +31,7 @@ public class UserInterface {
         return namePerson2;
     }
 
+    // Call methods to display all of the computed statistics.
     public void displayInterestStatistics(ArrayList<Object> statistics) {
 
         int indxGenre1 = StatisticsDataStore.getIndexGenrePreference1();
@@ -41,15 +46,18 @@ public class UserInterface {
 
         displayCommonBookComparison( (Integer)(statistics.get(indxPercentage1)), (Integer)(statistics.get(indxPercentage2)) );
 
+        // TODO: handle this if there are no books in common.
         displayRandomCommonBook( (Book)(statistics.get(indxRandomBook)) );
     }
 
+    // Display genre preferences for both people.
     private void displayGenrePreferences(GenrePreference genrePreference1, GenrePreference genrePreference2) {
         
         System.out.println(getNamePerson1() + "'s genre preference is: " + genrePreference1.toString());
         System.out.println(getNamePerson2() + "'s genre preference is: " + genrePreference2.toString());
     }
 
+    // Display percentages which compare books on the two reading lists.
     private void displayCommonBookComparison(Integer percentageBooks1ComparedTo2, Integer percentageBooks2ComparedTo1) {
         System.out.println(percentageBooks1ComparedTo2.toString()  
             + "% of " + getNamePerson1() + "'s books are also on " + getNamePerson2() + "'s list.");
@@ -58,6 +66,8 @@ public class UserInterface {
             + "% of " + getNamePerson2() + "'s books are also on " + getNamePerson1() + "'s list.");
     }
 
+    // Display a randomly-selected Book which is on both people's list.
+    // TODO: handle this if there are no books in common.
     private void displayRandomCommonBook(Book randomCommonBook) {
         System.out.println(getNamePerson1() + " and " + getNamePerson2() + " have this book in common: ");
         System.out.println(randomCommonBook.toString());

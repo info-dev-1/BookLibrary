@@ -8,7 +8,7 @@ import java.util.ArrayList;
  */
 public class ReadingListAnalyzer {
 
-    private ReadingListDataStore readingListDataStore;
+    private ReadingListDataStore readingListDataStore;  // Reading lists.
     
     private ArrayList<Book> booksInCommon = new ArrayList<>();  // Books which are common to both people's reading lists.
 
@@ -25,7 +25,7 @@ public class ReadingListAnalyzer {
         return booksInCommon;
     }
 
-
+    // Determine which books are in common with person 1 and person 2.
     public void logBooksInCommon() {
 
         Book[] listPerson1 = getReadingListDataStore().getBookReadingListPerson1();
@@ -33,6 +33,7 @@ public class ReadingListAnalyzer {
 
         if (largerListPerson1()) {
             
+            // Iterate through both lists to check for common books.
             for (int i = 0; i < listPerson1.length; i++) {
                 for (int j = 0; j < listPerson2.length; j++) {
                     
@@ -41,6 +42,7 @@ public class ReadingListAnalyzer {
             }
         }
         else {
+            // Iterate through both lists to check for common books.
             for (int i = 0; i < listPerson2.length; i++) {
                 for (int j = 0; j < listPerson1.length; j++) {
                     
@@ -50,23 +52,27 @@ public class ReadingListAnalyzer {
         }
     }
 
+    // Determine if a book is in common, and if so, log it.
     private void logBookIfNecessary(Book[] listFirstPerson, int indxListFirstPerson, Book[] listSecondPerson, int indxListSecondPerson) {
+
+        // Indexes for the books we are checking.
         int k = indxListFirstPerson;
         int m = indxListSecondPerson;
 
-        if (!bookPreviouslyAdded(listSecondPerson[m], getBooksInCommon()) 
+        if (!bookPreviouslyAdded(listSecondPerson[m], getBooksInCommon())  // If the book wasn't previously added and the book is in common.
             && bookInCommon(listFirstPerson[k], listSecondPerson[m])) {
 
             getBooksInCommon().add(listSecondPerson[m]);
         }
     }
 
-
+    // Determine whether person 1's reading list is larger than person 2's list.
     private boolean largerListPerson1() {
         return getReadingListDataStore().getBookReadingListPerson1().length
             > getReadingListDataStore().getBookReadingListPerson2().length;
     }
 
+    // Determine whether a book was previously added to booksInCommon.
     private boolean bookPreviouslyAdded(Book bookToCheck, ArrayList<Book> booksInCommon) {
         for (Book bookInCommon : booksInCommon) {
             if (bookToCheck.equals(bookInCommon)) {
@@ -76,6 +82,7 @@ public class ReadingListAnalyzer {
         return false;
     }
 
+    // Determine whether two books have the same content (i.e., are the same book, not necessarily the same one in memory).
     private boolean bookInCommon(Book book1, Book book2) {
         return book1.equals(book2);
     }

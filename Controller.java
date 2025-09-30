@@ -6,20 +6,20 @@
  */
 public class Controller {
 
+    // Names of the people whose lists we are comparing.
     String namePerson1;
 
     String namePerson2;
 
     private UserInterface userInterface;
 
-    private ReadingListDataStore readingListDataStore;
+    private ReadingListDataStore readingListDataStore;  // Holds the reading lists.
 
-    private ReadingListAnalyzer analyzer;
+    private ReadingListAnalyzer analyzer;  // Determines which books are in common between each list.
 
-    private StatisticsGenerator statisticsGenerator;
+    private StatisticsGenerator statisticsGenerator;  // Generates information regarding the comparison.
 
-    private StatisticsDataStore statisticsDataStore;
-
+    private StatisticsDataStore statisticsDataStore;  // Holds statistics about the comparison.
 
     public Controller(String namePerson1, Book[] readingListPerson1, String namePerson2, Book[] readingListPerson2) {
 
@@ -33,6 +33,8 @@ public class Controller {
 
         statisticsDataStore = new StatisticsDataStore();
     }
+
+    // Getters and setters.
 
     public String getNamePerson1() {
         return namePerson1;
@@ -65,12 +67,12 @@ public class Controller {
 
         StatisticsGenerator statsGenerator = getStatisticsGenerator();
         statsGenerator.setBooksInCommon(getAnalyzer().getBooksInCommon());
-        statsGenerator.computeInterestStatistics();
+        statsGenerator.computeInterestStatistics();  // Compute all statistics about reading lists and interests.
         
         StatisticsDataStore statsDataStore = statsGenerator.getStatisticsDataStore();
-        statsDataStore.setStatistics(statsGenerator.compileInterestStatistics());
+        statsDataStore.setStatistics(statsGenerator.compileInterestStatistics());  // Store all statistics.
 
-        getUserInterface().displayInterestStatistics(statsDataStore.getStatistics());
+        getUserInterface().displayInterestStatistics(statsDataStore.getStatistics());  // Display statistics to the user.
     }
 
 }
