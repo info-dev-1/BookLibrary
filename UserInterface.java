@@ -53,12 +53,14 @@ public class UserInterface {
     // Display genre preferences for both people.
     private void displayGenrePreferences(GenrePreference genrePreference1, GenrePreference genrePreference2) {
         
+        System.out.println();
         System.out.println(getNamePerson1() + "'s genre preference is: " + genrePreference1.toString());
         System.out.println(getNamePerson2() + "'s genre preference is: " + genrePreference2.toString());
     }
 
     // Display percentages which compare books on the two reading lists.
     private void displayCommonBookComparison(Integer percentageBooks1ComparedTo2, Integer percentageBooks2ComparedTo1) {
+        System.out.println();
         System.out.println(percentageBooks1ComparedTo2.toString()  
             + "% of " + getNamePerson1() + "'s books are also on " + getNamePerson2() + "'s list.");
 
@@ -69,8 +71,10 @@ public class UserInterface {
     // Display a randomly-selected Book which is on both people's list.
     // TODO: handle this if there are no books in common.
     private void displayRandomCommonBook(Book randomCommonBook) {
+        System.out.println();
         System.out.println(getNamePerson1() + " and " + getNamePerson2() + " have this book in common: ");
         System.out.println(randomCommonBook.toString());
+        System.out.println();
     }
     
     

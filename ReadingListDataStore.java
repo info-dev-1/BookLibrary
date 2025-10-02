@@ -11,6 +11,8 @@ public class ReadingListDataStore {
     private Book[] bookReadingListPerson2;  // The book reading list for person 2.
 
 
+    // Future sprint / reading-list-input - TODO: Make this an empty/default constructor b/c we will populate readingLists via a different method in Controller.java.
+    // However, this constructor with its Book[] parameters might need to remain, in case the team decides to load reading lists from a database.
     public ReadingListDataStore(Book[] bookReadingListPerson1, Book[] bookReadingListPerson2) {
         this.bookReadingListPerson1 = bookReadingListPerson1;
         this.bookReadingListPerson2 = bookReadingListPerson2;
