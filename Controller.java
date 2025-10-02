@@ -1,6 +1,9 @@
 /**
  * This class controls high-level logic for the reading-list comparison feature.
  * 
+ * Note: Throughout this feature's code, a "person" (such as person 1 or person 2) refers to one of the people whose reading lists we are comparing.
+ * The "user" (such as in UserInterface) refers to the user of the book libary system application.
+ * 
  * @author info-dev-1
  * @since 9/27/2025
  */

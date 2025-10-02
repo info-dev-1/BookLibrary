@@ -1,6 +1,9 @@
 /**
  * This class contains code which tests the reading list comparison feature.
  * 
+ * Note: Throughout this feature's code, a "person" (such as person 1 or person 2) refers to one of the people whose reading lists we are comparing.
+ * The "user" (such as in UserInterface) refers to the user of the book libary system application.
+ * 
  * @author info-dev-1
  * @since 9/27/2025
  */
@@ -10,18 +13,23 @@ public class Tester {
     public static void main(String[] args) {
 
         // Arrange variables for testing.
-        Book book1 = new Book("Book 1 Title", "Book1 Author", "00001", Genre.FICTION);
-        Book book2 = new Book("Book 2 Title", "Book2 Author", "00002", Genre.FICTION);
-        Book book3 = new Book("Book 3 Title", "Book3 Author", "00003", Genre.FICTION);
-        Book book4 = new Book("Book 4 Title", "Book4 Author", "00004", Genre.NON_FICTION);
-        Book book5 = new Book("Book 5 Title", "Book5 Author", "00005", Genre.NON_FICTION);
-        Book book6 = new Book("Book 6 Title", "Book6 Author", "00006", Genre.NON_FICTION);
+
+        // Fiction books.
+        Book theLordOfTheRings = new Book("The Lord of the Rings", "J.R.R. Tolkien", "47841", Genre.FICTION);
+        Book harryPotter = new Book("Harry Potter and the Sorcerer's Stone", "J.K. Rowling", "72050", Genre.FICTION);
+        Book theMartian = new Book("The Martian", "Andy Weir", "05013", Genre.FICTION);
+        Book hitchhikersGuide = new Book("The Hitchhiker's Guide to the Galaxy", "Douglas Adams", "66302", Genre.FICTION);
+
+        // Non-fiction books.
+        Book goodCodeBadCode = new Book("Good Code, Bad Code", "Tom Long", "33198", Genre.NON_FICTION);
+        Book gitForProgrammers = new Book("Git for Programmers", "Jesse Liberty", "35772", Genre.NON_FICTION);
+        Book statisticsBook = new Book("Statistics", "James McClave, Terry Sincich", "19453", Genre.NON_FICTION);
 
         String aliceName = "Alice";
         String bobName = "Bob";
 
-        Book[] aliceBooks = { book1, book2, book4 };
-        Book[] bobBooks = { book3, book4, book2, book5, book6 };
+        Book[] aliceBooks = { theLordOfTheRings, theMartian, harryPotter, hitchhikersGuide, gitForProgrammers };
+        Book[] bobBooks = { hitchhikersGuide, goodCodeBadCode, gitForProgrammers, statisticsBook };
 
         // Perform the test.
         Controller controller = new Controller(aliceName, aliceBooks, bobName, bobBooks);
