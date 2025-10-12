@@ -1,4 +1,8 @@
 import java.util.*;
+import java.time.LocalDate;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Library {
     private List<Book> books;
@@ -63,7 +67,8 @@ public class Library {
         if (book != null && patron != null && book.isAvailable()) {
             book.setAvailable(false);
             book.setBorrowedBy(patron);
-            System.out.println("Book \"" + title + "\" has been borrowed by " + patronName);
+            book.setDueDate(LocalDate.now().plusDays(14)); // Add Due Date - Set due date to 14 days
+            System.out.println("Book \"" + title + "\" has been borrowed by " + patronName + ", Due Date: " + book.getDueDate());
         } else {
             System.out.println("Book not available or patron not found.");
         }
@@ -74,9 +79,35 @@ public class Library {
         if (book != null && !book.isAvailable()) {
             book.setAvailable(true);
             book.setBorrowedBy(null);
+            book.setDueDate(null); // Add to clear due date on return
             System.out.println("Book \"" + title + "\" has been returned.");
         } else {
             System.out.println("Book not borrowed or not found.");
+        }
+    }
+}
+
+// Added sendOverdueNotifications 
+
+    public void sendOverdueNotifications() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("overdue_notifications.txt", true))) {
+            LocalDate today = LocalDate.now();
+            boolean hasOverdue = false;
+            for (Book book : books) {
+                if (!book.isAvailable() && book.getDueDate() != null && book.getDueDate().isBefore(today)) {
+                    hasOverdue = true;
+                    String notification = "Overdue: Book \"" + book.getTitle() + "\" borrowed by " + 
+                                         book.getBorrowedBy().getName() + ", Due Date: " + book.getDueDate();
+                    writer.write(notification);
+                    writer.newLine();
+                    System.out.println(notification);
+                }
+            }
+            if (!hasOverdue) {
+                System.out.println("No overdue books found.");
+            }
+        } catch (IOException e) {
+            System.out.println("Error writing to notifications file: " + e.getMessage());
         }
     }
 }
