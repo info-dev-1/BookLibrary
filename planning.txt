@@ -53,4 +53,4 @@ TODO:
  - make an enum for genre preference and use it. (Done)
  - see "Important" above regarding user vs. people. (Done)
  - Organize the feature code into a folder
- - Add some well-known books to the hard-coded reading lists.
+ - Add some well-known books to the hard-coded reading lists. (Done)

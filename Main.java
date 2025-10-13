@@ -27,7 +27,7 @@ public class Main {
 
 
         // Future sprint / reading-list-input - TODO: write code here (perhaps in a loop) to instantiate and call methods on a Controller instance,
-        // in order to get reading lists from the user and to perform the comparison on those lists.
+        // in order to get reading lists from the user (or a database) and to perform the comparison on those lists.
 
 
     }
