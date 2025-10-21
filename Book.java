@@ -1,9 +1,12 @@
+import java.time.LocalDate;
+
 public class Book {
     private String title;
     private String author;
     private String isbn;
     private boolean available;
     private Patron borrowedBy;
+    private LocalDate dueDate; //Added for storing date
 
     public Book(String title, String author, String isbn) {
         this.title = title;
@@ -11,6 +14,7 @@ public class Book {
         this.isbn = isbn;
         this.available = true;
         this.borrowedBy = null;
+        this.dueDate = null; // Add to initialize dueDate as null
     }
 
     // Getters and setters
@@ -42,12 +46,23 @@ public class Book {
         this.borrowedBy = borrowedBy;
     }
 
+    //Added LocalDate and DueDate
+    public LocalDate getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(LocalDate dueDate) {
+        this.dueDate = dueDate;
+    }
+
+    
     @Override
     public String toString() {
         if (available) {
             return "Title: " + title + ", Author: " + author + ", ISBN: " + isbn + ", Available: Yes";
         } else {
-            return "Title: " + title + ", Author: " + author + ", ISBN: " + isbn + ", Available: No, Borrowed By: " + borrowedBy.getName();
+            String dueDateStr = dueDate != null ? dueDate.toString() : "N/A"; // Added duedate string
+            return "Title: " + title + ", Author: " + author + ", ISBN: " + isbn + ", Available: No, Borrowed By: " + borrowedBy.getName() + ", Due Date: " + dueDateStr;
         }
     }
 }
