@@ -16,6 +16,7 @@ This is a simple command-line-based library management system implemented in Jav
 - Return books
 - Track borrowed books and due dates
 - Calculate fines for late returns
+- Send overdue notifications for borrowed books and save them to a text file
 
 ## Usage
 
