@@ -1,0 +1,24 @@
+// Authors which are common to both people's reading lists. In a simple format: "First name, Last name"
+    private ArrayList<String> authorsInCommon = null;
+
+
+
+private double percentageAuthors1ComparedTo2 = 0.0;  // Percentage of authors on person 1's list that are also on person 2's list.
+
+
+  private double percentageAuthors2ComparedTo1 = 0.0;  // Percentage of authors on person 2's list that are also on person 1's list.
+
+
+
+  
+    // TODO: decide whether to use this or delete it.
+    public void unpackReadingInterestStatistics() {
+        
+        setGenrePreference1((Genre)getStatistics().get(INDEX_GENRE_PREFERENCE_1));
+        setGenrePreference2((Genre)getStatistics().get(INDEX_GENRE_PREFERENCE_2));
+
+        setPercentageBooks1ComparedTo2((Double)getStatistics().get(INDEX_PERCENTAGE_1));
+        setPercentageBooks2ComparedTo1((Double)getStatistics().get(INDEX_PERCENTAGE_2));
+
+        setRandomBookInCommon((Book)getStatistics().get(INDEX_RANDOM_COMMON_BOOK));
+    }

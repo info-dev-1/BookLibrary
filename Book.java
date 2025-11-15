@@ -4,14 +4,16 @@ public class Book {
     private String title;
     private String author;
     private String isbn;
+    private Genre genre;
     private boolean available;
     private Patron borrowedBy;
     private LocalDate dueDate; //Added for storing date
 
-    public Book(String title, String author, String isbn) {
+    public Book(String title, String author, String isbn, Genre genre) {
         this.title = title;
         this.author = author;
         this.isbn = isbn;
+        this.genre = genre;
         this.available = true;
         this.borrowedBy = null;
         this.dueDate = null; // Add to initialize dueDate as null
@@ -28,6 +30,10 @@ public class Book {
 
     public String getIsbn() {
         return isbn;
+    }
+
+    public Genre getGenre() {
+        return genre;
     }
 
     public boolean isAvailable() {
