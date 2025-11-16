@@ -62,16 +62,6 @@ public class Main {
             }
         }
 
-        // Displaying books after borrowing
-        library.displayBooks();
-
-        // Returning a book
-        library.returnBook("Java Programming");
-
-        // Displaying books after returning
-        library.displayBooks();
-
-
         // Future sprint / reading-list-input - TODO: write code here (perhaps in a loop) to instantiate and call methods on a Controller instance,
         // in order to get reading lists from the user (or a database) and to perform the comparison on those lists.
 
