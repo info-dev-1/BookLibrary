@@ -7,5 +7,6 @@
  */
 public enum Genre {
     FICTION,  // Value signaling the fiction genre of book.
-    NON_FICTION  // Value signaling the non-fiction genre of book.
+    NON_FICTION,  // Value signaling the non-fiction genre of book.
+    INVALID_GENRE  // Value signaling that an invalid genre was found at some point in the code execution.
 }

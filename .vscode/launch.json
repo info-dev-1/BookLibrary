@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "GenreFormatConverterTest",
+            "request": "launch",
+            "mainClass": "GenreFormatConverterTest",
+            "projectName": "BookLibrary_543f7f3c"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"
