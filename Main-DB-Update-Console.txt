@@ -1,0 +1,143 @@
+import java.util.Scanner;
+//import java.time.LocalDate;
+
+public class Main {
+    public static void main(String[] args) {
+        Library library = new Library();
+        Scanner scanner = new Scanner(System.in);
+
+        // Login
+        String userId = null;
+        String role = null;
+        while (userId == null) {
+            System.out.print("Login as (librarian/patron): ");
+            role = scanner.nextLine().trim().toLowerCase();
+            if (!role.equals("librarian") && !role.equals("patron")) {
+                System.out.println("Invalid role.");
+                continue;
+            }
+            System.out.print("Username: ");
+            String username = scanner.nextLine();
+            System.out.print("Password: ");
+            String password = scanner.nextLine();
+            userId = library.authenticate(username, password, role);
+            if (userId == null) {
+                System.out.println("Invalid credentials. Try again.");
+            } else {
+                System.out.println("Login successful as " + role + ".");
+            }
+        }
+        int loggedInId = Integer.parseInt(userId);  // For patron-specific features
+
+        while (true) {
+            System.out.println("\nLibrary Management System");
+            System.out.println("1. Display Books");
+            System.out.println("2. Display Patrons");
+            System.out.println("3. Librarian Features");  // #3 - expand with sub-menu 
+            System.out.println("4. Overdue Book Notification/Fines Tracking");
+            System.out.println("5. Book Reservation / Hold System");
+            System.out.println("6. Borrowing History per Patron");
+            System.out.println("7. Persistent Reading");
+            System.out.println("8. Exit");
+            System.out.print("Enter your choice: ");
+
+            int choice;
+            try {
+                choice = Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a number.");
+                continue;
+            }
+
+            switch (choice) {
+                case 1:
+                    library.displayBooks();
+                    break;
+                case 2:
+                    library.displayPatrons();
+                    break;
+                case 3:
+                    if (role.equals("librarian")) {
+                       System.out.println("Librarian Features:");
+                       System.out.println("a. Add Book");
+                       System.out.println("b. Remove Book");
+                       System.out.println("c. Add Patron");
+                       System.out.println("d. Remove Patron");
+                       System.out.print("Enter sub-choice: ");
+                       String subChoice = scanner.nextLine().toLowerCase();
+                       switch (subChoice) {
+                  //Sub-Menu
+                            case "a":
+                                 System.out.print("Enter book title to add: ");
+                                 String title = scanner.nextLine();
+                                 System.out.print("Author: ");
+                                 String author = scanner.nextLine();
+                                 System.out.print("ISBN: ");
+                                 String isbn = scanner.nextLine();
+                                 System.out.print("Genre: ");
+                                 String genre = scanner.nextLine();
+                                 library.addBook(title, author, isbn, genre);
+                                 break;
+                            case "b":
+                                System.out.print("Enter book ID to remove: ");
+                                int bookIdRemove = Integer.parseInt(scanner.nextLine());
+                                library.removeBook(bookIdRemove);
+                                break;
+                           case "c":
+                               System.out.print("Enter patron name: ");
+                               String name = scanner.nextLine();
+                               System.out.print("Email: ");
+                               String email = scanner.nextLine();
+                               System.out.print("Phone: ");
+                               String phone = scanner.nextLine();
+                               System.out.print("Username: ");
+                               String username = scanner.nextLine();
+                               System.out.print("Password: ");
+                               String password = scanner.nextLine();
+                               library.addPatron(name, email, phone, username, password);
+                               break;
+                           case "d":
+                              System.out.print("Enter patron ID to remove: ");
+                              int patronIdRemove = Integer.parseInt(scanner.nextLine());
+                              library.removePatron(patronIdRemove);
+                              break;
+                       default:
+                     System.out.println("Invalid sub-choice.");
+        }
+                    } else {
+                        System.out.println("Access denied - Librarian only.");
+                    }
+                    break;
+                case 4:
+                    library.displayOverdueAndFines();
+                    break;
+                case 5:
+                    if (role.equals("patron")) {
+                        System.out.print("Enter book ID to reserve: ");
+                        int bookId = Integer.parseInt(scanner.nextLine());
+                        library.reserveBook(bookId, loggedInId);
+                    } else {
+                        System.out.println("Access denied - Patrons only.");
+                    }
+                    break;
+                case 6:
+                    if (role.equals("patron")) {
+                        library.displayBorrowingHistory(loggedInId);
+                    } else {
+                        System.out.println("Access denied - Patrons only.");
+                    }
+                    break;
+                case 7:
+                    System.out.println("Under Construction");
+                    break;
+                case 8:
+                    System.out.println("Exiting...");
+                    library.close();
+                    scanner.close();
+                    return;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+}
