@@ -36,7 +36,8 @@ public class GenreFormatConverterTest {
     // Test the conversion of a nonfiction genre value.
     private void testNonfictionConversion() {
         String nonfiction = GenreFormatConverterTest.NON_FICTION_GENRE_VALUE_STRING;
-        GenreFormatConverter converterNonfiction = new GenreFormatConverter(nonfiction);
+        GenreFormatConverter converterNonfiction = new GenreFormatConverter();
+        converterNonfiction.setGenreValueString(nonfiction);
 
         converterNonfiction.convertGenreFormat();
 
@@ -50,7 +51,8 @@ public class GenreFormatConverterTest {
     // Test the conversion of a fiction genre value.
     private void testLabelFictionConversion() {
         String fiction = GenreFormatConverterTest.FICTION_GENRE_VALUE_STRING;
-        GenreFormatConverter converterFiction = new GenreFormatConverter(fiction);
+        GenreFormatConverter converterFiction = new GenreFormatConverter();
+        converterFiction.setGenreValueString(fiction);
 
         converterFiction.convertGenreFormat();
 
@@ -64,7 +66,8 @@ public class GenreFormatConverterTest {
     // Test the conversion of a specific, fiction genre value (e.g., "Fantasy").
     private void testSpecificFictionConversion() {
         String specificFiction = GenreFormatConverterTest.SPECIFIC_FICTION_GENRE_VALUE_STRING;
-        GenreFormatConverter converterSpecificFiction = new GenreFormatConverter(specificFiction);
+        GenreFormatConverter converterSpecificFiction = new GenreFormatConverter();
+        converterSpecificFiction.setGenreValueString(specificFiction);
 
         converterSpecificFiction.convertGenreFormat();
 
@@ -78,7 +81,8 @@ public class GenreFormatConverterTest {
     // Test the conversion when an invalid genre value is provided.
     private void testInvalidConversion() {
         String invalidGenre = GenreFormatConverterTest.INVALID_GENRE_VALUE_STRING;
-        GenreFormatConverter converterUsingInvalidGenre = new GenreFormatConverter(invalidGenre);
+        GenreFormatConverter converterUsingInvalidGenre = new GenreFormatConverter();
+        converterUsingInvalidGenre.setGenreValueString(invalidGenre);
 
         converterUsingInvalidGenre.convertGenreFormat();
 

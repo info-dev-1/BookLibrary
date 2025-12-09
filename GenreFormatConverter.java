@@ -24,24 +24,23 @@ public class GenreFormatConverter {
     // As of 12/1, we don't have any specific nonfiction genres (such as "History").
     // Only nonfiction book records with the "Nonfiction" genre will be added to the database.
 
-
-    // Constructor.
-    public GenreFormatConverter(String genreValueString) {
-        this.genreValueString = genreValueString;
-    }
-
-    // Getters and setter.
+    
+    // Getters and setters.
 
     private String getGenreValueString() {
         return this.genreValueString;
     }
 
-    private void setGenreValueEnum(Genre value) {
-        this.genreValueEnum = value;
+    public void setGenreValueString(String genreValueString) {
+        this.genreValueString = genreValueString;
     }
 
     public Genre getGenreValueEnum() {
         return this.genreValueEnum;
+    }
+
+    private void setGenreValueEnum(Genre value) {
+        this.genreValueEnum = value;
     }
 
     // Convert the genre from String to Enum, and store that result in the instance field.
