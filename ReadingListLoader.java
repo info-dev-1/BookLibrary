@@ -4,7 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Arrays;  // TODO: research this to make sure I don't need it. I thought I needed it according to a Gemini syntax excerpt in constructBooklistFromResultSet.
 
 /**
  * Note: "reading list" and "booklist" usually refer to the same thing. However, the latter is more often used in SQL-related code in this class.
