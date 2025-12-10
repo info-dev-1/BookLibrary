@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "LibraryDatabaseSetupV2",
+            "request": "launch",
+            "mainClass": "LibraryDatabaseSetupV2",
+            "projectName": "BookLibrary_543f7f3c"
+        },
+        {
+            "type": "java",
             "name": "LibraryDatabaseSetup",
             "request": "launch",
             "mainClass": "LibraryDatabaseSetup",
