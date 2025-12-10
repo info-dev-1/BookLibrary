@@ -12,6 +12,10 @@ public class Tester {
     // Test the reading comparison feature.
     public static void main(String[] args) {
 
+        // ReadingListLoader testLoader = new ReadingListLoader();
+        // testLoader.testingUpdateFruitsTable();
+        
+
         // Arrange variables for testing.
 
         // Fiction books.

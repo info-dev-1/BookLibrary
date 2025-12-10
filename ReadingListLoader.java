@@ -64,7 +64,7 @@ public class ReadingListLoader {
     // This method's code is adapted from the second module 9 article reading, pp. 3-4.
     private Connection connectToDB() {
         try {
-            conn = DriverManager.getConnection("jdbc:sqlite:test_db_presence.db");  // TODO: change the db file to the actual db filename.
+            conn = DriverManager.getConnection("jdbc:sqlite:library.db");  // TODO: change the db file to the actual db filename.
             return conn;
         }
         catch (SQLException e) {
@@ -217,5 +217,58 @@ public class ReadingListLoader {
             System.out.println(e);
         }
         return result;
+    }
+
+
+    // 12/9 process: 1) create a new test table. 2) insert some values into it.
+    public void testingCreateFruitsTableInDB() {
+
+        conn = connectToDB();
+        // String name = null;
+        int rowsAffected = 0;
+
+        try {
+            String createFruitsSql = """
+                CREATE TABLE IF NOT EXISTS fruits (
+                    fruit_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    fruit_name TEXT,
+                    fruit_color TEXT,
+                    quantity INTEGER DEFAULT 1
+                )""";
+
+            PreparedStatement pstmt = conn.prepareStatement(createFruitsSql);
+            rowsAffected = pstmt.executeUpdate();
+            conn.close();
+        }
+        catch (SQLException e) {
+            System.out.println(e);
+        }
+
+        System.out.println("Rows affected: " + rowsAffected);
+        // System.out.println("Test: this string was successfully read from the database: " + name);
+
+    }
+
+    public void testingUpdateFruitsTable() {
+        conn = connectToDB();
+        int rowsAffected = 0;
+
+        try {
+            String updateFruitsSql = """
+                INSERT OR IGNORE INTO fruits
+                (fruit_name, fruit_color, quantity)
+                VALUES ( "Red Apple", "Red", 5 )
+                """;
+
+            PreparedStatement pstmt = conn.prepareStatement(updateFruitsSql);
+            rowsAffected = pstmt.executeUpdate();
+            conn.close();
+        }
+        catch (SQLException e) {
+            System.out.println(e);
+        }
+
+        System.out.println("Rows affected: " + rowsAffected);
+
     }
  }
