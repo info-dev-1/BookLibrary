@@ -1,0 +1,110 @@
+    private void createTable() {
+         
+        // Note: Will kept librarians and patrons tables as-is, because they were created correctly/without error.
+        
+        // necessary order of creation: persons, booklists, books, checkouts, fines, holds.
+        
+        // Note: This was run already, 12/9 pm.
+        // createPersonsTable();  
+
+        // Note: This was run already, 12/9 pm.
+        // createBooklistsTable();
+        
+
+        createBooksTable();  
+        // createCheckoutsTable();  
+
+        // createFinesTable();
+
+        // createHoldsTable();
+
+        
+        
+    }    
+    
+    
+    
+    
+    
+    private void createCheckoutsTable() {
+        conn = connectToDB();
+        int rowsAffected = 0;
+
+        try {
+            String createCheckoutsSql = """
+                CREATE TABLE IF NOT EXISTS checkouts (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    patron_id INTEGER,
+                    book_id INTEGER,
+                    checkout_date TEXT,
+                    due_date TEXT,
+                    return_date TEXT,
+                    FOREIGN KEY(patron_id) REFERENCES patrons(id),
+                    FOREIGN KEY(book_id) REFERENCES books(id)
+                )""";
+
+            PreparedStatement pstmt = conn.prepareStatement(createCheckoutsSql);
+            rowsAffected = pstmt.executeUpdate();
+            conn.close();
+        }
+        catch (SQLException e) {
+            System.out.println(e);
+        }
+
+        System.out.println("Rows affected: " + rowsAffected);
+    }
+
+    private void createFinesTable() {
+        conn = connectToDB();
+        int rowsAffected = 0;
+
+        try {
+            String createFinesSql = """
+                CREATE TABLE IF NOT EXISTS fines (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    patron_id INTEGER,
+                    checkout_id INTEGER,
+                    amount REAL,
+                    paid INTEGER DEFAULT 0,  -- 0 for unpaid, 1 for paid
+                    FOREIGN KEY(patron_id) REFERENCES patrons(id),
+                    FOREIGN KEY(checkout_id) REFERENCES checkouts(id)
+                )""";
+
+            PreparedStatement pstmt = conn.prepareStatement(createFinesSql);
+            rowsAffected = pstmt.executeUpdate();
+            conn.close();
+        }
+        catch (SQLException e) {
+            System.out.println(e);
+        }
+
+        System.out.println("Rows affected: " + rowsAffected);
+    }
+
+    public void testingCreateFruitsTableInDB() {
+
+        conn = connectToDB();
+        // String name = null;
+        int rowsAffected = 0;
+
+        try {
+            String createFruitsSql = """
+                CREATE TABLE IF NOT EXISTS fruits (
+                    fruit_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    fruit_name TEXT,
+                    fruit_color TEXT,
+                    quantity INTEGER DEFAULT 1
+                )""";
+
+            PreparedStatement pstmt = conn.prepareStatement(createFruitsSql);
+            rowsAffected = pstmt.executeUpdate();
+            conn.close();
+        }
+        catch (SQLException e) {
+            System.out.println(e);
+        }
+
+        System.out.println("Rows affected: " + rowsAffected);
+        // System.out.println("Test: this string was successfully read from the database: " + name);
+
+    }

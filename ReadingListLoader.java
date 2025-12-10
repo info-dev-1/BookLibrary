@@ -15,9 +15,9 @@ public class ReadingListLoader {
     private Connection conn = null;
 
     // TODO: Note the documentation of the configuration file which contains these ID values. I made some documentation and I need to find it.
-    private static final int ID_PERSON_1 = 0;  
+    private static final int ID_PERSON_1 = 1;  
 
-    private static final int ID_PERSON_2 = 1; 
+    private static final int ID_PERSON_2 = 2; 
 
     private String namePerson1 = null; 
 

@@ -13,9 +13,9 @@ public class LibraryDatabaseSetupV2 {
     public static void main(String[] args) {
 
         LibraryDatabaseSetupV2 setupScriptObject = new LibraryDatabaseSetupV2();
-        setupScriptObject.createTable();
+        // setupScriptObject.createTable();  // All done on 12/9 pm.
 
-        // setupScriptObject.insertAllInitialData();
+        setupScriptObject.insertInitialData();
 
     }
 
@@ -31,12 +31,9 @@ public class LibraryDatabaseSetupV2 {
         }
     }
 
-    // TODO: confirm table names with the mod9 design document.
     private void createTable() {
-         
-        // Note: Will kept librarians and patrons tables as-is, because they were created correctly/without error.
         
-        // necessary order of creation: persons, booklists, books, checkouts, fines, holds.
+        // necessary order of creation: persons, booklists, books.
         
         // Note: This was run already, 12/9 pm.
         // createPersonsTable();  
@@ -44,16 +41,8 @@ public class LibraryDatabaseSetupV2 {
         // Note: This was run already, 12/9 pm.
         // createBooklistsTable();
         
-
-        createBooksTable();  
-        // createCheckoutsTable();  
-
-        // createFinesTable();
-
-        // createHoldsTable();
-
-        
-        
+        // Note: This was run already, 12/9 pm.
+        // createBooksTable();
     }
 
     private void createPersonsTable() {
@@ -130,17 +119,155 @@ public class LibraryDatabaseSetupV2 {
         System.out.println("Rows affected: " + rowsAffected);
     }
 
-    private void updateBooksTableAddBooklistIDColumn() {
+    private void insertInitialData() {
+        // order: persons, booklists, books.
+
+        // updatePersonsTable();  // This was run 12/10.
+
+        // updateBooklistsTable();  // This was run 12/10.
+
+        // updateBooksTable();  // This was run 12/10.
+        
+    }
+
+    private void updatePersonsTable() {
         conn = connectToDB();
         int rowsAffected = 0;
 
         try {
-            String updateBooksSql = """
-                ALTER TABLE books ADD COLUMN booklist_id INTEGER
+            String updatePersonsSql = """
+                INSERT OR IGNORE INTO persons (name) VALUES ( ? )
                 """;
+            PreparedStatement pstmt = conn.prepareStatement(updatePersonsSql);
 
+            pstmt.setString(1, "Alice");
+            rowsAffected += pstmt.executeUpdate();
+
+            pstmt.setString(1, "Bob");
+            rowsAffected += pstmt.executeUpdate();
+
+            conn.close();
+        }
+        catch (SQLException e) {
+            System.out.println(e);
+        }
+
+        System.out.println("Rows affected: " + rowsAffected);   
+    }
+
+    private void updateBooklistsTable() {
+        conn = connectToDB();
+        int rowsAffected = 0;
+
+        try {
+            String updateBooklistsSql = """
+                INSERT OR IGNORE INTO booklists (person_id) VALUES ( ? )
+                """;
+            PreparedStatement pstmt = conn.prepareStatement(updateBooklistsSql);
+
+            pstmt.setInt(1, 1);
+            rowsAffected += pstmt.executeUpdate();
+
+            pstmt.setInt(1, 2);
+            rowsAffected += pstmt.executeUpdate();
+
+            conn.close();
+        }
+        catch (SQLException e) {
+            System.out.println(e);
+        }
+
+        System.out.println("Rows affected: " + rowsAffected);
+    }
+
+    private void updateBooksTable() {
+        conn = connectToDB();
+        int rowsAffected = 0;
+
+        try {
+            // only the last 2 parameters are INTEGER. All other ones are TEXT.
+            String updateBooksSql = """
+                INSERT INTO books (title, author, isbn, genre, available, booklist_id) VALUES (?, ?, ?, ?, ?, ?)
+                """;
             PreparedStatement pstmt = conn.prepareStatement(updateBooksSql);
-            rowsAffected = pstmt.executeUpdate();
+
+            // Commented-out b/c these data were successfully inserted into the DB.
+
+            // Books only on the list of the person identified by person_id 1
+            // pstmt.setString(1, "The Lord of the Rings");
+            // pstmt.setString(2, "J.R.R. Tolkien");
+            // pstmt.setString(3, "47841");
+            // pstmt.setString(4, "Fiction");
+            // pstmt.setInt(5, 1);
+            // pstmt.setInt(6, 1);
+            // rowsAffected += pstmt.executeUpdate();
+
+            // pstmt.setString(1, "Harry Potter and the Sorcerer's Stone");
+            // pstmt.setString(2, "J.K. Rowling");
+            // pstmt.setString(3, "72050");
+            // pstmt.setString(4, "Fiction");
+            // pstmt.setInt(5, 1);
+            // pstmt.setInt(6, 1);
+            // rowsAffected += pstmt.executeUpdate();
+
+            // pstmt.setString(1, "The Martian");
+            // pstmt.setString(2, "Andy Weir");
+            // pstmt.setString(3, "05013");
+            // pstmt.setString(4, "Fiction");
+            // pstmt.setInt(5, 1);
+            // pstmt.setInt(6, 1);
+            // rowsAffected += pstmt.executeUpdate();
+
+            // Books on both persons' lists. (So, they are entered twice, 1 for each booklist_id.)
+            // pstmt.setString(1, "The Hitchhiker's Guide to the Galaxy");
+            // pstmt.setString(2, "Douglas Adams");
+            // pstmt.setString(3, "66302");
+            // pstmt.setString(4, "Fiction");
+            // pstmt.setInt(5, 1);
+            // pstmt.setInt(6, 1);
+            // rowsAffected += pstmt.executeUpdate();
+
+            pstmt.setString(1, "The Hitchhiker's Guide to the Galaxy");
+            pstmt.setString(2, "Douglas Adams");
+            pstmt.setString(3, "66302");
+            pstmt.setString(4, "Fiction");
+            pstmt.setInt(5, 1);
+            pstmt.setInt(6, 2);
+            rowsAffected += pstmt.executeUpdate();
+
+            // pstmt.setString(1, "Git for Programmers");
+            // pstmt.setString(2, "Jesse Liberty");
+            // pstmt.setString(3, "35772");
+            // pstmt.setString(4, "Nonfiction");
+            // pstmt.setInt(5, 1);
+            // pstmt.setInt(6, 1);
+            // rowsAffected += pstmt.executeUpdate();
+
+            pstmt.setString(1, "Git for Programmers");
+            pstmt.setString(2, "Jesse Liberty");
+            pstmt.setString(3, "35772");
+            pstmt.setString(4, "Noniction");
+            pstmt.setInt(5, 1);
+            pstmt.setInt(6, 2);
+            rowsAffected += pstmt.executeUpdate();
+
+            // Books only on the list of the person identified by person_id 2
+            // pstmt.setString(1, "Good Code, Bad Code");
+            // pstmt.setString(2, "Tom Long");
+            // pstmt.setString(3, "33198");
+            // pstmt.setString(4, "Noniction");
+            // pstmt.setInt(5, 1);
+            // pstmt.setInt(6, 2);
+            // rowsAffected += pstmt.executeUpdate();
+
+            // pstmt.setString(1, "Statistics");
+            // pstmt.setString(2, "James McClave, Terry Sincich");
+            // pstmt.setString(3, "19453");
+            // pstmt.setString(4, "Noniction");
+            // pstmt.setInt(5, 1);
+            // pstmt.setInt(6, 2);
+            // rowsAffected += pstmt.executeUpdate();
+
             conn.close();
         }
         catch (SQLException e) {
@@ -148,89 +275,6 @@ public class LibraryDatabaseSetupV2 {
         }
 
         System.out.println("Rows affected: " + rowsAffected);
-    }
-
-    private void createCheckoutsTable() {
-        conn = connectToDB();
-        int rowsAffected = 0;
-
-        try {
-            String createCheckoutsSql = """
-                CREATE TABLE IF NOT EXISTS checkouts (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    patron_id INTEGER,
-                    book_id INTEGER,
-                    checkout_date TEXT,
-                    due_date TEXT,
-                    return_date TEXT,
-                    FOREIGN KEY(patron_id) REFERENCES patrons(id),
-                    FOREIGN KEY(book_id) REFERENCES books(id)
-                )""";
-
-            PreparedStatement pstmt = conn.prepareStatement(createCheckoutsSql);
-            rowsAffected = pstmt.executeUpdate();
-            conn.close();
-        }
-        catch (SQLException e) {
-            System.out.println(e);
-        }
-
-        System.out.println("Rows affected: " + rowsAffected);
-    }
-
-    private void createFinesTable() {
-        conn = connectToDB();
-        int rowsAffected = 0;
-
-        try {
-            String createFinesSql = """
-                CREATE TABLE IF NOT EXISTS fines (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    patron_id INTEGER,
-                    checkout_id INTEGER,
-                    amount REAL,
-                    paid INTEGER DEFAULT 0,  -- 0 for unpaid, 1 for paid
-                    FOREIGN KEY(patron_id) REFERENCES patrons(id),
-                    FOREIGN KEY(checkout_id) REFERENCES checkouts(id)
-                )""";
-
-            PreparedStatement pstmt = conn.prepareStatement(createFinesSql);
-            rowsAffected = pstmt.executeUpdate();
-            conn.close();
-        }
-        catch (SQLException e) {
-            System.out.println(e);
-        }
-
-        System.out.println("Rows affected: " + rowsAffected);
-    }
-
-    public void testingCreateFruitsTableInDB() {
-
-        conn = connectToDB();
-        // String name = null;
-        int rowsAffected = 0;
-
-        try {
-            String createFruitsSql = """
-                CREATE TABLE IF NOT EXISTS fruits (
-                    fruit_id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    fruit_name TEXT,
-                    fruit_color TEXT,
-                    quantity INTEGER DEFAULT 1
-                )""";
-
-            PreparedStatement pstmt = conn.prepareStatement(createFruitsSql);
-            rowsAffected = pstmt.executeUpdate();
-            conn.close();
-        }
-        catch (SQLException e) {
-            System.out.println(e);
-        }
-
-        System.out.println("Rows affected: " + rowsAffected);
-        // System.out.println("Test: this string was successfully read from the database: " + name);
-
     }
 
     public void testingUpdateFruitsTable() {
