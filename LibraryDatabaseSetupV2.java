@@ -1,10 +1,14 @@
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+/**
+ * This class contains code which sets up library.db for the reading list comparison feature.
+ * 
+ * @author info-dev-1
+ * @since 12/9/25
+ */
 public class LibraryDatabaseSetupV2 {
 
     private Connection conn = null;  // For connecting to the SQLite database.
@@ -13,9 +17,10 @@ public class LibraryDatabaseSetupV2 {
     public static void main(String[] args) {
 
         LibraryDatabaseSetupV2 setupScriptObject = new LibraryDatabaseSetupV2();
-        // setupScriptObject.createTable();  // All done on 12/9 pm.
 
-        setupScriptObject.insertInitialData();
+        // setupScriptObject.createTable();  // Completed on 12/9 pm.
+
+        // setupScriptObject.insertInitialData();  // Completed on 12/10.
 
     }
 
@@ -33,7 +38,7 @@ public class LibraryDatabaseSetupV2 {
 
     private void createTable() {
         
-        // necessary order of creation: persons, booklists, books.
+        // Necessary order of creation: persons, booklists, books.
         
         // Note: This was run already, 12/9 pm.
         // createPersonsTable();  
@@ -45,6 +50,7 @@ public class LibraryDatabaseSetupV2 {
         // createBooksTable();
     }
 
+    // Create the persons table.
     private void createPersonsTable() {
         conn = connectToDB();
         int rowsAffected = 0;
@@ -56,6 +62,7 @@ public class LibraryDatabaseSetupV2 {
                     name TEXT NOT NULL
                 )""";
 
+            // Prepare and execute the statement.
             PreparedStatement pstmt = conn.prepareStatement(createPersonsSql);
             rowsAffected = pstmt.executeUpdate();
             conn.close();
@@ -67,6 +74,7 @@ public class LibraryDatabaseSetupV2 {
         System.out.println("Rows affected: " + rowsAffected);
     }
 
+    // Create the booklists table.
     private void createBooklistsTable() {
         conn = connectToDB();
         int rowsAffected = 0;
@@ -79,6 +87,7 @@ public class LibraryDatabaseSetupV2 {
                     FOREIGN KEY(person_id) REFERENCES persons(person_id)
                 )""";
 
+            // Prepare and execute the statement.
             PreparedStatement pstmt = conn.prepareStatement(createBooklistsSql);
             rowsAffected = pstmt.executeUpdate();
             conn.close();
@@ -90,7 +99,7 @@ public class LibraryDatabaseSetupV2 {
         System.out.println("Rows affected: " + rowsAffected);
     }
 
-
+    // Create the books table.
     private void createBooksTable() {
         conn = connectToDB();
         int rowsAffected = 0;
@@ -108,6 +117,7 @@ public class LibraryDatabaseSetupV2 {
                     FOREIGN KEY(booklist_id) REFERENCES booklists(booklist_id)
                 )""";
 
+            // Prepare and execute the statement.
             PreparedStatement pstmt = conn.prepareStatement(createBooksSql);
             rowsAffected = pstmt.executeUpdate();
             conn.close();
@@ -120,16 +130,17 @@ public class LibraryDatabaseSetupV2 {
     }
 
     private void insertInitialData() {
-        // order: persons, booklists, books.
+
+        // Necessary order of updating: persons, booklists, books.
 
         // updatePersonsTable();  // This was run 12/10.
 
         // updateBooklistsTable();  // This was run 12/10.
 
         // updateBooksTable();  // This was run 12/10.
-        
     }
 
+    // Populate the persons table.
     private void updatePersonsTable() {
         conn = connectToDB();
         int rowsAffected = 0;
@@ -155,6 +166,7 @@ public class LibraryDatabaseSetupV2 {
         System.out.println("Rows affected: " + rowsAffected);   
     }
 
+    // Populate the booklists table.
     private void updateBooklistsTable() {
         conn = connectToDB();
         int rowsAffected = 0;
@@ -180,6 +192,7 @@ public class LibraryDatabaseSetupV2 {
         System.out.println("Rows affected: " + rowsAffected);
     }
 
+    // Populate the books table.
     private void updateBooksTable() {
         conn = connectToDB();
         int rowsAffected = 0;
@@ -275,29 +288,6 @@ public class LibraryDatabaseSetupV2 {
         }
 
         System.out.println("Rows affected: " + rowsAffected);
-    }
-
-    public void testingUpdateFruitsTable() {
-        conn = connectToDB();
-        int rowsAffected = 0;
-
-        try {
-            String updateFruitsSql = """
-                INSERT OR IGNORE INTO fruits
-                (fruit_name, fruit_color, quantity)
-                VALUES ( "Red Apple", "Red", 5 )
-                """;
-
-            PreparedStatement pstmt = conn.prepareStatement(updateFruitsSql);
-            rowsAffected = pstmt.executeUpdate();
-            conn.close();
-        }
-        catch (SQLException e) {
-            System.out.println(e);
-        }
-
-        System.out.println("Rows affected: " + rowsAffected);
-
     }
 
 }

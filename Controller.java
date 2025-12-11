@@ -10,9 +10,9 @@
 public class Controller {
 
     // Names of the people whose lists we are comparing.
-    String namePerson1;
+    private String namePerson1;
 
-    String namePerson2;
+    private String namePerson2;
 
     private UserInterface userInterface;
 
@@ -24,9 +24,7 @@ public class Controller {
 
     private StatisticsDataStore statisticsDataStore;  // Holds statistics about the comparison.
 
-    // Future sprint / reading-list-input - TODO: this constructor won't initialize readingListPerson1 nor readingListPerson2
-    // (b/c we'll populate those via a different instance method.)
-    // However, this constructor with its Book[] parameters might need to remain, in case the team decides to load reading lists from a database.
+
     public Controller(String namePerson1, Book[] readingListPerson1, String namePerson2, Book[] readingListPerson2) {
 
         userInterface = new UserInterface(namePerson1, namePerson2);
@@ -65,9 +63,6 @@ public class Controller {
     public StatisticsDataStore getStatisticsDataStore() {
         return statisticsDataStore;
     }
-
-    // Future sprint / reading-list-input - TODO: make instance methods, public void loadReadingLists() and/or getReadingListsFromUser().
-    // Thoes method(s) will modify the field readingListDataStore.
 
     // The central method of the comparison feature.
     public void performComparison() {

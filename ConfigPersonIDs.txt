@@ -1,25 +1,16 @@
-12/10/25
+@author info-dev-1
+@since 12/10/25
 
 Starting program configuration for the person ID's
 
-
+Instructions:
 Ensure that:
-
 In ReadingListLoader.java, these lines are coded:
 
 private static final int ID_PERSON_1 = 1;  
 
 private static final int ID_PERSON_2 = 2; 
 
-
+Also:
 In the database library.db, persons table, the first person's person_id is 1
 The second person's person_id is 2
-
-
-
-
-note:
-
-booklist_id for Alice: 1
-booklist_id for Bob: 2
-

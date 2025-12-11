@@ -4,9 +4,18 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * This class represents a library.
+ * This class was present in the original, forked codebase.
+ */
 public class Library {
+
+    // Fields.
+
     private List<Book> books;
+
     private List<Patron> patrons;
+
 
     public Library() {
         books = new ArrayList<>();
@@ -61,6 +70,7 @@ public class Library {
         }
     }
 
+    // This method is out of scope of the reading list comparison feature.
     public void borrowBook(String title, String patronName) {
         Book book = findBookByTitle(title);
         Patron patron = findPatronByName(patronName);
@@ -74,6 +84,7 @@ public class Library {
         }
     }
 
+    // This method is out of scope of the reading list comparison feature.
     public void returnBook(String title) {
         Book book = findBookByTitle(title);
         if (book != null && !book.isAvailable()) {
@@ -86,9 +97,8 @@ public class Library {
         }
     }
 
-
-// Added sendOverdueNotifications 
-
+    // This is from Dianna's feature.
+    // Added sendOverdueNotifications.
     public void sendOverdueNotifications() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("overdue_notifications.txt", true))) {
             LocalDate today = LocalDate.now();

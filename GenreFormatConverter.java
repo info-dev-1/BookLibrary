@@ -55,7 +55,7 @@ public class GenreFormatConverter {
             conversionResult = Genre.NON_FICTION;
         }
         
-        // TODO: Proper error-handling for when the genre of a book (as it is stored in the database) is not one of the supported variants.
+        // TODO potentially for QA work: Proper error-handling for when the genre of a book (as it is stored in the database) is not one of the supported variants.
         // As of 12/1/25, info-dev-1 is coding this to store an "invalid genre" value.
         else {
             conversionResult = Genre.INVALID_GENRE;

@@ -4,19 +4,21 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-//import java.text.MessageFormat;
 
+/**
+ * This class contains a database setup script in the main method.
+ * 
+ * This class was contributed by Dianna. It contains some debugging edits of mine (info-dev-1).
+ * I had to re-work this class and tailor it to my reading list comparison feature; the result is in LibraryDatabaseSetupV2.java.
+ */
 public class LibraryDatabaseSetup {
     public static void main(String[] args) {
         // Connect to (or create) the SQLite database file
-
-
-        String url = "jdbc:sqlite:library.db"; // Or however you define it
+        String url = "jdbc:sqlite:library.db";
 
         // Add this line immediately before the connection attempt
         System.out.println("DEBUG: Attempting to connect to: " + url);
         System.out.println("DEBUG: Current Working Directory: " + System.getProperty("user.dir"));
-
 
         try (Connection connection = DriverManager.getConnection(url)) {
             // Create tables if they don't exist

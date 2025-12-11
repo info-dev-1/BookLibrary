@@ -1,3 +1,5 @@
+This file contains code pertinent to Dianna's feature and some testing code.  
+    
     private void createTable() {
          
         // Note: Will kept librarians and patrons tables as-is, because they were created correctly/without error.
@@ -18,13 +20,7 @@
 
         // createHoldsTable();
 
-        
-        
     }    
-    
-    
-    
-    
     
     private void createCheckoutsTable() {
         conn = connectToDB();
