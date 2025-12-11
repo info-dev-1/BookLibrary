@@ -14,7 +14,6 @@ public class ReadingListLoader {
 
     private Connection conn = null;
 
-    // TODO: Note the documentation of the configuration file which contains these ID values. I made some documentation and I need to find it.
     private static final int ID_PERSON_1 = 1;  
 
     private static final int ID_PERSON_2 = 2; 
@@ -60,11 +59,10 @@ public class ReadingListLoader {
         this.readingListPerson2 = readingListPerson2;
     }
     
-    // TODO: fix the module number, I don't think it is 9.
-    // This method's code is adapted from the second module 9 article reading, pp. 3-4.
+    // This method's code is adapted from the second module 6 article reading, pp. 3-4.
     private Connection connectToDB() {
         try {
-            conn = DriverManager.getConnection("jdbc:sqlite:library.db");  // TODO: change the db file to the actual db filename.
+            conn = DriverManager.getConnection("jdbc:sqlite:library.db");
             return conn;
         }
         catch (SQLException e) {
@@ -76,6 +74,7 @@ public class ReadingListLoader {
     public void loadAllDataForComparisonFeature() {
         setNamePerson1(getNameFromDB(ID_PERSON_1));
         setNamePerson2(getNameFromDB(ID_PERSON_2));
+
         setReadingListPerson1(getBooklistFromDB(ID_PERSON_1)); 
         setReadingListPerson2(getBooklistFromDB(ID_PERSON_2)); 
     }
@@ -138,6 +137,10 @@ public class ReadingListLoader {
         conn = connectToDB();
         ResultSet booklistResultSet = readValuesFromBooksTable(booklistID);
 
+        // iterate over that result set, storing the data in the Book instances.
+        Book[] booklist = constructBooklistFromResultSet(booklistResultSet);
+        
+
         try {
             conn.close();
         }
@@ -145,33 +148,34 @@ public class ReadingListLoader {
             System.out.println(e);
         }
 
-        // iterate over that result set, storing the data in the Book instances.
-        Book[] booklist = constructBooklistFromResultSet(booklistResultSet);
         return booklist;
+        
     }
 
+    // Process the ResultSet and construct an array of Books.
     private Book[] constructBooklistFromResultSet(ResultSet resultSet) {
         ArrayList<Book> booklistBuilder = new ArrayList<>();
         GenreFormatConverter formatConverter = new GenreFormatConverter();
 
         try {
-            resultSet.next();
-            String title = resultSet.getString("title");
-            String author = resultSet.getString("author");
-            String isbn = resultSet.getString("isbn");
-            String genreString = resultSet.getString("genre");
-        
-            formatConverter.setGenreValueString(genreString);
-            formatConverter.convertGenreFormat();
-            Genre genreEnum = formatConverter.getGenreValueEnum();
+            while (resultSet.next()) {
+                String title = resultSet.getString("title");
+                String author = resultSet.getString("author");
+                String isbn = resultSet.getString("isbn");
+                String genreString = resultSet.getString("genre");
+            
+                formatConverter.setGenreValueString(genreString);
+                formatConverter.convertGenreFormat();
+                Genre genreEnum = formatConverter.getGenreValueEnum();
 
-            booklistBuilder.add(new Book(title, author, isbn, genreEnum));
+                booklistBuilder.add(new Book(title, author, isbn, genreEnum));
+            }
         }
         catch (SQLException e) {
             System.out.println(e);
         }
         // Syntax from Gemini, 12/8/25
-        Book[] bookArray = booklistBuilder.stream().toArray(Book[]::new);
+        Book[] bookArray = booklistBuilder.stream().toArray(Book[]::new);  // TODO: ensure this code line works.
         return bookArray;
     }
 

@@ -84,6 +84,6 @@ public class ReadingListAnalyzer {
 
     // Determine whether two books have the same content (i.e., are the same book, not necessarily the same one in memory).
     private boolean bookInCommon(Book book1, Book book2) {
-        return book1.equals(book2);
+        return book1.getIsbn().equals(book2.getIsbn());
     }
 }

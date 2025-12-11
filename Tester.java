@@ -12,31 +12,39 @@ public class Tester {
     // Test the reading comparison feature.
     public static void main(String[] args) {
 
-        // ReadingListLoader testLoader = new ReadingListLoader();
-        // testLoader.testingUpdateFruitsTable();
+        ReadingListLoader testLoader = new ReadingListLoader();
+        testLoader.loadAllDataForComparisonFeature();
+
+        String namePerson1 = testLoader.getNamePerson1();
+        String namePerson2 = testLoader.getNamePerson2();
+
+        Book[] bookArrayPerson1 = testLoader.getReadingListPerson1();
+        Book[] bookArrayPerson2 = testLoader.getReadingListPerson2();
+
         
 
-        // Arrange variables for testing.
+        // // Arrange variables for testing.
 
-        // Fiction books.
-        Book theLordOfTheRings = new Book("The Lord of the Rings", "J.R.R. Tolkien", "47841", Genre.FICTION);
-        Book harryPotter = new Book("Harry Potter and the Sorcerer's Stone", "J.K. Rowling", "72050", Genre.FICTION);
-        Book theMartian = new Book("The Martian", "Andy Weir", "05013", Genre.FICTION);
-        Book hitchhikersGuide = new Book("The Hitchhiker's Guide to the Galaxy", "Douglas Adams", "66302", Genre.FICTION);
+        // // Fiction books.
+        // Book theLordOfTheRings = new Book("The Lord of the Rings", "J.R.R. Tolkien", "47841", Genre.FICTION);
+        // Book harryPotter = new Book("Harry Potter and the Sorcerer's Stone", "J.K. Rowling", "72050", Genre.FICTION);
+        // Book theMartian = new Book("The Martian", "Andy Weir", "05013", Genre.FICTION);
+        // Book hitchhikersGuide = new Book("The Hitchhiker's Guide to the Galaxy", "Douglas Adams", "66302", Genre.FICTION);
 
-        // Non-fiction books.
-        Book goodCodeBadCode = new Book("Good Code, Bad Code", "Tom Long", "33198", Genre.NON_FICTION);
-        Book gitForProgrammers = new Book("Git for Programmers", "Jesse Liberty", "35772", Genre.NON_FICTION);
-        Book statisticsBook = new Book("Statistics", "James McClave, Terry Sincich", "19453", Genre.NON_FICTION);
+        // // Non-fiction books.
+        // Book goodCodeBadCode = new Book("Good Code, Bad Code", "Tom Long", "33198", Genre.NON_FICTION);
+        // Book gitForProgrammers = new Book("Git for Programmers", "Jesse Liberty", "35772", Genre.NON_FICTION);
+        // Book statisticsBook = new Book("Statistics", "James McClave, Terry Sincich", "19453", Genre.NON_FICTION);
 
-        String aliceName = "Alice";
-        String bobName = "Bob";
+        // String aliceName = "Alice";
+        // String bobName = "Bob";
 
-        Book[] aliceBooks = { theLordOfTheRings, theMartian, harryPotter, hitchhikersGuide, gitForProgrammers };
-        Book[] bobBooks = { hitchhikersGuide, goodCodeBadCode, gitForProgrammers, statisticsBook };
+        // Book[] aliceBooks = { theLordOfTheRings, theMartian, harryPotter, hitchhikersGuide, gitForProgrammers };
+        // Book[] bobBooks = { hitchhikersGuide, goodCodeBadCode, gitForProgrammers, statisticsBook };
 
         // Perform the test.
-        Controller controller = new Controller(aliceName, aliceBooks, bobName, bobBooks);
+        Controller controller = new Controller(namePerson1, bookArrayPerson1, namePerson2, bookArrayPerson2);
+        // Controller controller = new Controller(aliceName, aliceBooks, bobName, bobBooks);
         controller.performComparison();
         
     }
