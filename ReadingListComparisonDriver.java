@@ -12,9 +12,11 @@ public class ReadingListComparisonDriver {
     // Run the reading list comparison feature.
     public static void main(String[] args) {
 
+        // Load all essential data from the database.
         ReadingListLoader loader = new ReadingListLoader();
         loader.loadAllDataForComparisonFeature();
 
+        // Access essential data for the analysis/comparison feature.
         String namePerson1 = loader.getNamePerson1();
         String namePerson2 = loader.getNamePerson2();
 

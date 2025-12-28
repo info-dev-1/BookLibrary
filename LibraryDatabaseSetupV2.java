@@ -151,6 +151,7 @@ public class LibraryDatabaseSetupV2 {
                 """;
             PreparedStatement pstmt = conn.prepareStatement(updatePersonsSql);
 
+            // Set values for the table and execute the update.
             pstmt.setString(1, "Alice");
             rowsAffected += pstmt.executeUpdate();
 
@@ -177,6 +178,7 @@ public class LibraryDatabaseSetupV2 {
                 """;
             PreparedStatement pstmt = conn.prepareStatement(updateBooklistsSql);
 
+            // Set values for the table and execute the update.
             pstmt.setInt(1, 1);
             rowsAffected += pstmt.executeUpdate();
 
@@ -206,6 +208,8 @@ public class LibraryDatabaseSetupV2 {
 
             // Commented-out b/c these data were successfully inserted into the DB.
 
+            // Set values for the table and execute the update.
+            
             // Books only on the list of the person identified by person_id 1
             // pstmt.setString(1, "The Lord of the Rings");
             // pstmt.setString(2, "J.R.R. Tolkien");

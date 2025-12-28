@@ -1,3 +1,6 @@
+/**
+ * This class was present in the original, forked codebase.
+ */
 public class Patron {
     private String name;
     private int id;

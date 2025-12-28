@@ -1,6 +1,11 @@
-
 import java.util.Scanner;
 
+
+/**
+ * This class was present in the original, forked codebase.
+ * 
+ * Most all of the code in this class was contributed by Dianna. Such code is essential for her features.
+ */
 public class Main {
     public static void main(String[] args) {
         Library library = new Library();
