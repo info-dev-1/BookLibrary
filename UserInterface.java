@@ -17,10 +17,13 @@ public class UserInterface {
 
     private String namePerson2;
 
+    private boolean zeroBooksInCommonFlag = false;  // If this has been set to true, the app has detected that there are zero books in common to person 1's and person 2's lists.
+
 
     public UserInterface(String namePerson1, String namePerson2) {
         this.namePerson1 = namePerson1;
         this.namePerson2 = namePerson2;
+        
     }
 
     public String getNamePerson1() {
@@ -31,8 +34,19 @@ public class UserInterface {
         return namePerson2;
     }
 
+    // Getter for zeroBooksInCommonFlag.
+    public boolean zeroBooksInCommon() {
+        return zeroBooksInCommonFlag;
+    }
+
+    public void setZeroBooksInCommonFlag(boolean flagValue) {
+        zeroBooksInCommonFlag = flagValue;
+    }
+
     // Call methods to display all of the computed statistics.
     public void displayInterestStatistics(ArrayList<Object> statistics) {
+
+        displayComparisonFeatureHeader();
 
         int indxGenre1 = StatisticsDataStore.getIndexGenrePreference1();
         int indxGenre2 = StatisticsDataStore.getIndexGenrePreference2();
@@ -40,22 +54,51 @@ public class UserInterface {
         int indxPercentage1 = StatisticsDataStore.getIndexPercentage1();
         int indxPercentage2 = StatisticsDataStore.getIndexPercentage2();
 
-        int indxRandomBook = StatisticsDataStore.getIndexRandomCommonBook();
+        int indxZeroBooksInCommonFlag = StatisticsDataStore.getIndexZeroBooksInCommonFlag();
 
         displayGenrePreferences( (GenrePreference)(statistics.get(indxGenre1)), (GenrePreference)(statistics.get(indxGenre2)) );
 
-        displayCommonBookComparison( (Integer)(statistics.get(indxPercentage1)), (Integer)(statistics.get(indxPercentage2)) );
+        boolean zeroBooksInCommon = (Boolean)statistics.get(indxZeroBooksInCommonFlag);
+        if (zeroBooksInCommon) {
+            displayZeroBooksInCommonNotification();
+        }
+        else {
+            displayCommonBookComparison( (Integer)(statistics.get(indxPercentage1)), (Integer)(statistics.get(indxPercentage2)) );
 
-        // TODO: handle this if there are no books in common.
-        displayRandomCommonBook( (Book)(statistics.get(indxRandomBook)) );
+            int indxRandomBook = StatisticsDataStore.getIndexRandomCommonBook();
+            displayRandomCommonBook( (Book)(statistics.get(indxRandomBook)) );
+        }
+        
+    }
+
+    private void displayComparisonFeatureHeader() {
+        System.out.println();
+        System.out.println("Book Library System: Analyze/Compare Two Peoples' Personal Reading Lists");
+        System.out.println("-------------------------------------------------------------------------------------");
+  
     }
 
     // Display genre preferences for both people.
     private void displayGenrePreferences(GenrePreference genrePreference1, GenrePreference genrePreference2) {
-        
+        String person1GenrePreferenceString = computeGenrePreferenceString(genrePreference1);
+        String person2GenrePreferenceString = computeGenrePreferenceString(genrePreference2);
+
         System.out.println();
-        System.out.println(getNamePerson1() + "'s genre preference is: " + genrePreference1.toString());
-        System.out.println(getNamePerson2() + "'s genre preference is: " + genrePreference2.toString());
+        System.out.println(getNamePerson1() + "'s genre preference is: " + person1GenrePreferenceString);
+        System.out.println(getNamePerson2() + "'s genre preference is: " + person2GenrePreferenceString);
+    }
+
+    private String computeGenrePreferenceString(GenrePreference genrePreferenceEnum) {
+        
+        if (genrePreferenceEnum.equals(GenrePreference.FICTION)) {
+            return "fiction";
+        }
+        else if (genrePreferenceEnum.equals(GenrePreference.NON_FICTION)) {
+            return "nonfiction";
+        }
+        else {
+            return "no particular genre";
+        }
     }
 
     // Display percentages which compare books on the two reading lists.
@@ -68,14 +111,21 @@ public class UserInterface {
             + "% of " + getNamePerson2() + "'s books are also on " + getNamePerson1() + "'s list.");
     }
 
+    private void displayZeroBooksInCommonNotification() {
+        System.out.println();
+        System.out.println(getNamePerson1() + " and " + getNamePerson2() + " have no books in common to their reading lists.");
+        System.out.println();
+    }
+
     // Display a randomly-selected Book which is on both people's list.
-    // TODO: handle this if there are no books in common.
     private void displayRandomCommonBook(Book randomCommonBook) {
         System.out.println();
         System.out.println(getNamePerson1() + " and " + getNamePerson2() + " have this book in common: ");
         System.out.println(randomCommonBook.toString());
         System.out.println();
     }
+
+
     
     
 }

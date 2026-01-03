@@ -71,11 +71,12 @@ public class Controller {
 
         StatisticsGenerator statsGenerator = getStatisticsGenerator();
         statsGenerator.setBooksInCommon(getAnalyzer().getBooksInCommon());
-        statsGenerator.computeInterestStatistics();  // Compute all statistics about reading lists and interests.
-        
-        StatisticsDataStore statsDataStore = statsGenerator.getStatisticsDataStore();
-        statsDataStore.setStatistics(statsGenerator.compileInterestStatistics());  // Store all statistics.
 
+        StatisticsDataStore statsDataStore = statsGenerator.getStatisticsDataStore();
+        statsGenerator.computeInterestStatistics();  // Compute all statistics about reading lists and interests.
+    
+        statsDataStore.setStatistics(statsGenerator.compileInterestStatistics());  // Store all statistics.
+        
         getUserInterface().displayInterestStatistics(statsDataStore.getStatistics());  // Display statistics to the user.
     }
 

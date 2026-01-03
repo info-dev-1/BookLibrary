@@ -18,7 +18,9 @@ public class StatisticsDataStore {
 
     private static final int INDEX_PERCENTAGE_2 = 3;  // For accessing percentageBooks2ComparedTo1.
 
-    private static final int INDEX_RANDOM_COMMON_BOOK = 4;  // For accessing the random common book.
+    private static final int INDEX_RANDOM_COMMON_BOOK = 5;  // For accessing the random common book.
+
+    private static final int INDEX_ZERO_BOOKS_IN_COMMON_FLAG = 4;  // For accessing the flag indicating 0 books in common to both peoples' lists.
 
 
     // Fields holding the statistics.
@@ -34,6 +36,8 @@ public class StatisticsDataStore {
     private GenrePreference genrePreferencePerson1 = null;  // Data indicating the genre "preference" for person 1.
     
     private GenrePreference genrePreferencePerson2 = null;  // Data indicating the genre "preference" for person 2.
+
+    private boolean zeroBooksInCommonFlag = false;  // If this has been set to true, the app has detected that there are zero books in common to person 1's and person 2's lists.
 
 
     // Getters and setters.
@@ -56,6 +60,10 @@ public class StatisticsDataStore {
 
     public static int getIndexRandomCommonBook() {
         return INDEX_RANDOM_COMMON_BOOK;
+    }
+
+    public static int getIndexZeroBooksInCommonFlag() {
+        return INDEX_ZERO_BOOKS_IN_COMMON_FLAG;
     }
 
     public ArrayList<Object> getStatistics() {
@@ -104,5 +112,13 @@ public class StatisticsDataStore {
 
     public void setPercentageBooks2ComparedTo1(int percentage) {
         this.percentageBooks2ComparedTo1 = percentage;
+    }
+
+    public boolean getZeroBooksInCommonFlag() {
+        return zeroBooksInCommonFlag;
+    }
+
+    public void setZeroBooksInCommonFlag(boolean flagValue) {
+        zeroBooksInCommonFlag = flagValue;
     }
 }

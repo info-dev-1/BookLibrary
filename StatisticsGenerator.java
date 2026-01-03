@@ -20,6 +20,8 @@ public class StatisticsGenerator {
 
     private StatisticsDataStore statisticsDataStore = new StatisticsDataStore();  // For storing statistics.
 
+    private boolean zeroBooksInCommonFlag = false;
+
 
     public StatisticsGenerator(ReadingListDataStore listDataStore) {
         this.readingListDataStore = listDataStore;
@@ -44,6 +46,14 @@ public class StatisticsGenerator {
         return statisticsDataStore;
     }
 
+    private void setZeroBooksInCommonFlag(boolean flagValue) {
+        zeroBooksInCommonFlag = flagValue;
+    }
+
+    private boolean getZeroBooksInCommonFlag() {
+        return zeroBooksInCommonFlag;
+    }
+
     // Compute interests and shared interests regarding the reading lists. See the contained methods' definitions for details.
     public void computeInterestStatistics() {
 
@@ -53,7 +63,13 @@ public class StatisticsGenerator {
         computePercentageBooks1ComparedTo2();
         computePercentageBooks2ComparedTo1();
 
-        pickRandomBookInCommon();
+        if (getBooksInCommon().size() == 0) {
+            setZeroBooksInCommonFlag(true);
+        }
+        else {
+            pickRandomBookInCommon();
+        }
+        
     }
 
     // Compute and store a GenrePreference enum-value which indicates person 1's genre "preference".
@@ -169,7 +185,7 @@ public class StatisticsGenerator {
         getStatisticsDataStore().setRandomBookInCommon(randomBookInCommon);
     }
 
-    // Pack the five interest/shared interest statistics into an ArrayList.
+    // Pack the five interest/shared interest statistics into an ArrayList. Also include the boolean flag, zeroBooksInCommon.
     public ArrayList<Object> compileInterestStatistics() {
         
         ArrayList<Object> result = new ArrayList<>();
@@ -180,8 +196,12 @@ public class StatisticsGenerator {
         result.add((Integer)(getStatisticsDataStore().getPercentageBooks1ComparedTo2()));
         result.add((Integer)(getStatisticsDataStore().getPercentageBooks2ComparedTo1()));
 
-        result.add(getStatisticsDataStore().getRandomBookInCommon());
-
+        result.add(Boolean.valueOf(getZeroBooksInCommonFlag()));
+        
+        if (!getZeroBooksInCommonFlag()) {  // If there are greater than 0 books in common to both people's lists.
+            result.add(getStatisticsDataStore().getRandomBookInCommon());
+        }
+        
         return result;
     }
 }
