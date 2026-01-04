@@ -185,7 +185,7 @@ public class StatisticsGenerator {
         getStatisticsDataStore().setRandomBookInCommon(randomBookInCommon);
     }
 
-    // Pack the five interest/shared interest statistics into an ArrayList. Also include the boolean flag, zeroBooksInCommon.
+    // Pack the six interest/shared interest statistics/data into an ArrayList. Also include the boolean flag, zeroBooksInCommon.
     public ArrayList<Object> compileInterestStatistics() {
         
         ArrayList<Object> result = new ArrayList<>();
